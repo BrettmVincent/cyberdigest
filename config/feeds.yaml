@@ -1,0 +1,215 @@
+# CyberDigest feed list
+# Built from the original 100-feed list plus the 2026-11-23 feed audit
+# (corrected URLs, tiers, drops and additions).
+#
+# Fields
+#   id            stable identifier (lowercase, no spaces) - never reuse an id
+#   name          display name
+#   url           RSS 2.0 / Atom / RDF feed URL
+#   tier          A = authoritative advisory (CERT / PSIRT / government)
+#                 B = primary research (IOCs, TTPs, root-cause analysis)
+#                 C = news / aggregation (folded into story clusters)
+#   group         intel | vuln | gov | psirt | news | blue
+#   enabled       false keeps the entry documented but skips fetching
+#   firehose      true for high-volume advisory streams: their items only reach
+#                 the Priority view when KEV / EPSS / SSVC / PoC rules fire
+#   include       regex - keep only items whose title matches (case-insensitive)
+#   exclude       regex - drop items whose title matches (case-insensitive)
+#   marketing     false disables the global marketing-title filter (default on for tier B/C)
+#   lang          ISO language code when not English
+#   headers       extra request headers (e.g. a different User-Agent) if a site needs it
+
+feeds:
+  # ── Threat intelligence, APTs & malware research ────────────────────────────
+  - { id: talos, name: Cisco Talos, url: "https://blog.talosintelligence.com/rss/", tier: B, group: intel }
+  - { id: unit42, name: Palo Alto Unit 42, url: "https://unit42.paloaltonetworks.com/feed/", tier: B, group: intel }
+  - { id: msft-ti, name: Microsoft Threat Intelligence, url: "https://www.microsoft.com/en-us/security/blog/topic/threat-intelligence/feed/", tier: B, group: intel }
+  - { id: gtig, name: Google Threat Intelligence (Mandiant), url: "https://cloudblog.withgoogle.com/topics/threat-intelligence/rss/", tier: B, group: intel }
+  - { id: crowdstrike, name: CrowdStrike, url: "https://www.crowdstrike.com/en-us/blog/feed", tier: B, group: intel }
+  - { id: securelist, name: Kaspersky Securelist, url: "https://securelist.com/feed/", tier: B, group: intel }
+  - { id: sentinellabs, name: SentinelLabs, url: "https://www.sentinelone.com/labs/feed/", tier: B, group: intel }
+  - id: eset
+    name: ESET WeLiveSecurity
+    url: "https://www.welivesecurity.com/en/rss/feed/"
+    tier: C
+    group: intel
+    include: "threat|malware|apt|ransomware|exploit|vulnerab|campaign|backdoor|espionage|attack|botnet|research"
+  - { id: recordedfuture, name: Recorded Future (Insikt), url: "https://www.recordedfuture.com/feed", tier: B, group: intel }
+  - { id: elastic, name: Elastic Security Labs, url: "https://www.elastic.co/security-labs/rss/feed.xml", tier: B, group: intel }
+  - { id: huntress, name: Huntress, url: "https://www.huntress.com/blog/rss.xml", tier: B, group: intel }
+  - { id: sophos, name: Sophos X-Ops, url: "https://www.sophos.com/en-us/category/threat-research/feed", tier: B, group: intel }
+  - { id: proofpoint, name: Proofpoint Threat Insight, url: "https://www.proofpoint.com/us/threat-insight-blog.xml", tier: B, group: intel }
+  - { id: checkpoint, name: Check Point Research, url: "https://research.checkpoint.com/feed/", tier: B, group: intel }
+  - { id: groupib, name: Group-IB, url: "https://www.group-ib.com/feed/blogfeed/", tier: B, group: intel }
+  - { id: malwarebytes, name: Malwarebytes Labs, url: "https://www.malwarebytes.com/blog/feed/index.xml", tier: C, group: intel }
+  - { id: bitdefender, name: Bitdefender Labs, url: "https://www.bitdefender.com/nuxt/api/en-us/rss/labs/", tier: B, group: intel }
+  - { id: zscaler, name: Zscaler ThreatLabz, url: "https://www.zscaler.com/blogs/feeds/security-research", tier: B, group: intel }
+  - { id: rapid7, name: Rapid7, url: "https://www.rapid7.com/rss.xml", tier: B, group: intel }
+  - { id: volexity, name: Volexity, url: "https://www.volexity.com/feed/", tier: B, group: intel }
+  - { id: fortiguard, name: FortiGuard Labs, url: "https://feeds.fortinet.com/fortinet/blog/threat-research", tier: B, group: intel }
+  - { id: infostealers, name: Infostealers.com (Hudson Rock), url: "https://www.infostealers.com/feed/", tier: B, group: intel }
+  # Added from the "most reliable ransomware sources" list (verified 2026-11-23). Overlapping feeds are safe:
+  # articles are de-duplicated by URL across feeds, and the higher-tier feed keeps ownership.
+  - { id: coveware, name: Coveware (ransomware IR & payments), url: "https://coveware.com/feed/", tier: B, group: intel }
+  - { id: msft-secintel, name: Microsoft Security Intelligence, url: "https://www.microsoft.com/security/blog/tag/microsoft-security-intelligence/feed/", tier: B, group: intel }
+  - { id: sophos-blog, name: Sophos News (all), url: "https://www.sophos.com/en-us/blog/feed?id=blt6f15f4f7deaf4242", tier: C, group: intel }
+  - { id: sophos-ransomware, name: Sophos X-Ops (ransomware), url: "https://www.sophos.com/en-us/tag/ransomware/feed", tier: B, group: intel }
+
+  # ── Vulnerabilities, zero-days & exploit research ───────────────────────────
+  - { id: projectzero, name: Google Project Zero, url: "https://projectzero.google/feed.xml", tier: B, group: vuln }
+  - { id: zdi-advisories, name: ZDI Published Advisories, url: "https://www.zerodayinitiative.com/rss/published/", tier: A, group: vuln, firehose: true }
+  - { id: zdi-blog, name: ZDI Blog, url: "https://www.zerodayinitiative.com/blog?format=rss", tier: B, group: vuln }
+  - { id: exploitdb, name: Exploit-DB, url: "https://www.exploit-db.com/rss.xml", tier: C, group: vuln }
+  - { id: qualys, name: Qualys Threat Research, url: "https://blog.qualys.com/feed", tier: B, group: vuln }
+  - { id: tenable, name: Tenable, url: "https://www.tenable.com/blog/feed", tier: B, group: vuln }
+  - { id: certcc, name: CERT/CC Vulnerability Notes, url: "https://kb.cert.org/vuls/atomfeed/", tier: A, group: vuln }
+  - { id: vulncheck, name: VulnCheck, url: "https://www.vulncheck.com/feed/blog/atom.xml", tier: B, group: vuln }
+  - { id: watchtowr, name: watchTowr Labs, url: "https://labs.watchtowr.com/rss/", tier: B, group: vuln }
+  - { id: horizon3, name: Horizon3.ai, url: "https://horizon3.ai/feed/", tier: B, group: vuln }
+  - { id: slcyber, name: Searchlight Cyber Research, url: "https://www.slcyber.io/research/rss.xml", tier: B, group: vuln }
+  - { id: portswigger, name: PortSwigger Research, url: "https://portswigger.net/research/rss", tier: B, group: vuln }
+  - { id: synacktiv, name: Synacktiv, url: "https://www.synacktiv.com/en/feed/lastblog.xml", tier: B, group: vuln }
+  - { id: trailofbits, name: Trail of Bits, url: "https://blog.trailofbits.com/index.xml", tier: B, group: vuln }
+  - { id: bishopfox, name: Bishop Fox, url: "https://bishopfox.com/feeds/blog.rss", tier: B, group: vuln }
+  - { id: projectdiscovery, name: ProjectDiscovery, url: "https://projectdiscovery.io/rss.xml", tier: B, group: vuln }
+  - { id: wiz, name: Wiz, url: "https://www.wiz.io/feed/rss.xml", tier: B, group: vuln }
+  - { id: orca, name: Orca Security, url: "https://orca.security/feed/", tier: C, group: vuln }
+
+  # ── Government, CERT & national advisories ─────────────────────────────────
+  - { id: cisa-alerts, name: CISA Alerts, url: "https://www.cisa.gov/cybersecurity-advisories/alerts.xml", tier: A, group: gov }
+  - { id: cisa-ics, name: CISA ICS Advisories, url: "https://www.cisa.gov/cybersecurity-advisories/ics-advisories.xml", tier: A, group: gov }
+  - { id: cisa-icsmed, name: CISA ICS Medical Advisories, url: "https://www.cisa.gov/cybersecurity-advisories/ics-medical-advisories.xml", tier: A, group: gov }
+  - { id: cisa-csa, name: CISA Joint Cybersecurity Advisories, url: "https://www.cisa.gov/cybersecurity-advisories/cybersecurity-advisories.xml", tier: A, group: gov }
+  - { id: cisa-news, name: CISA News, url: "https://www.cisa.gov/news.xml", tier: C, group: gov }
+  - { id: fbi-ic3, name: FBI IC3 Cybersecurity Advisories, url: "https://www.ic3.gov/CSA/RSS", tier: A, group: gov }
+  - id: europol
+    name: Europol News
+    url: "https://www.europol.europa.eu/cms/api/rss/news"
+    tier: C
+    group: gov
+    # Mostly general organised-crime news; keep cybercrime takedowns and operations only.
+    include: "cyber|ransomware|malware|botnet|hack(er|ers|ed|ing|s)?\\b|phishing|dark ?web|darknet|DDoS|infostealer|spyware|crypter|bulletproof|takedown|Operation Endgame"
+  - { id: ncsc-uk-reports, name: NCSC UK Reports, url: "https://www.ncsc.gov.uk/api/1/services/v1/report-rss-feed.xml", tier: B, group: gov }
+  - { id: ncsc-uk-news, name: NCSC UK News, url: "https://www.ncsc.gov.uk/api/1/services/v1/news-rss-feed.xml", tier: C, group: gov }
+  - { id: cert-eu, name: CERT-EU Advisories, url: "https://cert.europa.eu/publications/security-advisories-rss", tier: A, group: gov }
+  - { id: cert-eu-ti, name: CERT-EU Threat Intelligence, url: "https://cert.europa.eu/publications/threat-intelligence-rss", tier: B, group: gov }
+  - { id: cert-fr-alerts, name: CERT-FR Alertes, url: "https://cert.cyber.gouv.fr/alerte/feed/", tier: A, group: gov, lang: fr }
+  - { id: cert-fr, name: CERT-FR Publications, url: "https://cert.cyber.gouv.fr/feed/", tier: C, group: gov, lang: fr, firehose: true }
+  - { id: cccs, name: Canadian Centre for Cyber Security, url: "https://www.cyber.gc.ca/api/cccs/atom/v1/get?feed=alerts_advisories&lang=en", tier: A, group: gov, firehose: true }
+  - id: ncsc-nl
+    name: NCSC-NL Advisories
+    url: "https://advisories.ncsc.nl/rss/advisories"
+    tier: A
+    group: gov
+    lang: nl
+    # Titles carry [probability/impact]; keep high-impact advisories only.
+    include: "/H\\]"
+
+  # ── Vendor PSIRTs & infrastructure security ────────────────────────────────
+  - { id: msrc, name: Microsoft MSRC, url: "https://api.msrc.microsoft.com/update-guide/rss", tier: A, group: psirt, firehose: true, exclude: "^Chromium:" }
+  - { id: cisco-psirt, name: Cisco PSIRT, url: "https://sec.cloudapps.cisco.com/security/center/psirtrss20/CiscoSecurityAdvisory.xml", tier: A, group: psirt }
+  - { id: panw-psirt, name: Palo Alto Networks PSIRT, url: "https://security.paloaltonetworks.com/rss.xml", tier: A, group: psirt }
+  - { id: fortinet-psirt, name: Fortinet PSIRT, url: "https://filestore.fortinet.com/fortiguard/rss/ir.xml", tier: A, group: psirt }
+  - { id: ivanti, name: Ivanti Security Advisories, url: "https://www.ivanti.com/blog/topics/security-advisory/rss", tier: A, group: psirt }
+  - { id: juniper, name: Juniper Security Advisories, url: "https://supportportal.juniper.net/knowledgerss?type=Security", tier: A, group: psirt }
+  - { id: oracle-cpu, name: Oracle Critical Patch Updates, url: "https://www.oracle.com/ocom/groups/public/@otn/documents/webcontent/rss-otn-sec.xml", tier: A, group: psirt }
+  - { id: gitlab, name: GitLab Security Releases, url: "https://about.gitlab.com/security-releases.xml", tier: A, group: psirt }
+  - { id: chrome, name: Chrome Releases (Stable Desktop), url: "https://chromereleases.googleblog.com/feeds/posts/default", tier: A, group: psirt, include: "Stable Channel Update for Desktop" }
+  - { id: google-security, name: Google Security Blog, url: "https://blog.google/security/rss/", tier: B, group: psirt }
+  - id: aws-security
+    name: AWS Security Blog
+    url: "https://aws.amazon.com/blogs/security/feed/"
+    tier: C
+    group: psirt
+    include: "threat|vulnerab|incident|ransomware|CVE|exploit|attack|compromise|malware"
+  - { id: cloudflare, name: Cloudflare Security, url: "https://blog.cloudflare.com/tag/security/rss", tier: B, group: psirt }
+  - { id: ubuntu-usn, name: Ubuntu Security Notices, url: "https://ubuntu.com/security/notices/rss.xml", tier: A, group: psirt, firehose: true }
+  - { id: redhat, name: Red Hat Security Advisories, url: "https://security.access.redhat.com/data/metrics/rhsa.rss", tier: A, group: psirt, firehose: true, include: "Critical|Important" }
+  - { id: debian-dsa, name: Debian Security Advisories, url: "https://www.debian.org/security/dsa.rdf", tier: A, group: psirt, firehose: true }
+  - { id: github-security, name: GitHub Security Blog, url: "https://github.blog/security/feed/", tier: B, group: psirt }
+  - { id: okta, name: Okta Security, url: "https://sec.okta.com/rss.xml", tier: B, group: psirt }
+
+  # ── Breaking news & investigative journalism ───────────────────────────────
+  - { id: bleepingcomputer, name: BleepingComputer, url: "https://www.bleepingcomputer.com/feed/", tier: C, group: news }
+  - { id: krebs, name: Krebs on Security, url: "https://krebsonsecurity.com/feed/", tier: C, group: news }
+  - { id: krebs-ransomware, name: Krebs on Security (ransomware), url: "https://krebsonsecurity.com/category/ransomware/feed/", tier: C, group: news }
+  - { id: darkreading, name: Dark Reading, url: "https://www.darkreading.com/rss.xml", tier: C, group: news }
+  - { id: thehackernews, name: The Hacker News, url: "https://feeds.feedburner.com/TheHackersNews", tier: C, group: news }
+  - { id: securityweek, name: SecurityWeek, url: "https://www.securityweek.com/feed/", tier: C, group: news }
+  - { id: therecord, name: The Record, url: "https://therecord.media/feed", tier: C, group: news }
+  - { id: cyberscoop, name: CyberScoop, url: "https://cyberscoop.com/feed/", tier: C, group: news }
+  - { id: cyberscoop-ransomware, name: CyberScoop (ransomware), url: "https://cyberscoop.com/tag/ransomware/feed/", tier: C, group: news }
+  - { id: helpnet-ransomware, name: Help Net Security (ransomware), url: "https://www.helpnetsecurity.com/tag/ransomware/feed/", tier: C, group: news }
+  - { id: cybersecurity-dive, name: Cybersecurity Dive, url: "https://www.cybersecuritydive.com/feeds/news/", tier: C, group: news }
+  - id: risky-bulletin
+    name: Risky Bulletin (Risky Business)
+    url: "https://news.risky.biz/feed"
+    tier: C
+    group: news
+    # Weekday news digest; the same feed also carries podcast episodes.
+    exclude: "podcast|^Risky Business #|Snake Oilers|Between Two Nerds|Srsly Risky Biz|Sponsored"
+  - { id: theregister, name: The Register Security, url: "https://www.theregister.com/security/headlines.atom", tier: C, group: news }
+  - { id: arstechnica, name: Ars Technica Security, url: "https://arstechnica.com/security/feed/", tier: C, group: news }
+  - { id: databreaches, name: DataBreaches.net, url: "https://databreaches.net/feed/", tier: C, group: news }
+
+  # ── Regional: South Africa (site-wide feeds, keyword-filtered) ─────────────
+  # No South African, Ghanaian or Mauritian CSIRT publishes RSS (checked 2026-11-23); these outlets carry
+  # local incident reporting. Filter them together with the search token  feed:za-
+  - &za
+    id: za-techcentral
+    name: TechCentral (ZA)
+    url: "https://techcentral.co.za/feed/"
+    tier: C
+    group: news
+    include: "ransomware|cyber|hack(er|ers|ed|ing|s)?\\b|breach|data leak|leaked|malware|phishing|extortion|vulnerab|exploit|infostealer|DDoS|spyware|SIM swap"
+  - { <<: *za, id: za-itweb, name: ITWeb (ZA), url: "https://www.itweb.co.za/rss" }
+  - { <<: *za, id: za-mybroadband, name: MyBroadband Security (ZA), url: "https://mybroadband.co.za/news/security/feed" }
+  - { <<: *za, id: za-businesstech, name: BusinessTech (ZA), url: "https://businesstech.co.za/news/feed/" }
+  - { id: za-itonline, name: IT-Online Security (ZA), url: "https://it-online.co.za/category/security/feed/", tier: C, group: news }
+
+  # ── Blue team, telemetry & DFIR ────────────────────────────────────────────
+  - { id: sans-isc, name: SANS Internet Storm Center, url: "https://isc.sans.edu/rssfeed_full.xml", tier: B, group: blue, exclude: "Stormcast" }
+  - { id: greynoise, name: GreyNoise, url: "https://www.greynoise.io/blog/rss.xml", tier: B, group: blue }
+  - { id: dfirreport, name: The DFIR Report, url: "https://thedfirreport.com/feed/", tier: B, group: blue }
+  - { id: specterops, name: SpecterOps, url: "https://specterops.io/feed/", tier: B, group: blue }
+  - { id: trustedsec, name: TrustedSec, url: "https://trustedsec.com/feed.rss", tier: B, group: blue }
+  - { id: bhis, name: Black Hills InfoSec, url: "https://www.blackhillsinfosec.com/feed/", tier: C, group: blue }
+  - { id: censys, name: Censys, url: "https://censys.com/feed/", tier: B, group: blue }
+
+  # ── Dropped (tier D in the audit) - kept for reference, not fetched ─────────
+  - { id: trellix, name: Trellix (blocked to all clients), url: "https://www.trellix.com/en-us/about/newsroom/stories/rss.xml", tier: B, group: intel, enabled: false }
+  - { id: withsecure, name: WithSecure (marketing only), url: "https://www.withsecure.com/en/feed/", tier: C, group: intel, enabled: false }
+  - { id: cisa-all, name: CISA All (superset of component feeds), url: "https://www.cisa.gov/cybersecurity-advisories/all.xml", tier: A, group: gov, enabled: false }
+  - { id: bsi-wid, name: BSI WID (1000+/week, German), url: "https://wid.cert-bund.de/content/public/securityAdvisory/rss", tier: A, group: gov, enabled: false, lang: de }
+  - { id: jpcert, name: JPCERT/CC (reprints), url: "https://www.jpcert.or.jp/english/rss/jpcert-en.rdf", tier: A, group: gov, enabled: false }
+  - { id: wired, name: WIRED Security, url: "https://www.wired.com/feed/category/security/latest/rss", tier: C, group: news, enabled: false }
+  - { id: securityaffairs, name: Security Affairs, url: "https://securityaffairs.com/feed", tier: C, group: news, enabled: false }
+  - { id: helpnet, name: Help Net Security, url: "https://www.helpnetsecurity.com/feed/", tier: C, group: news, enabled: false }
+  - { id: infosecmag, name: Infosecurity Magazine, url: "https://www.infosecurity-magazine.com/rss/news/", tier: C, group: news, enabled: false }
+  - { id: 404media, name: 404 Media, url: "https://www.404media.co/rss/", tier: C, group: news, enabled: false }
+  - { id: schneier, name: Schneier on Security, url: "https://www.schneier.com/feed/atom/", tier: C, group: blue, enabled: false }
+  - { id: troyhunt, name: Troy Hunt, url: "https://www.troyhunt.com/rss/", tier: C, group: blue, enabled: false }
+  - { id: abusech, name: abuse.ch news, url: "https://abuse.ch/rss/", tier: C, group: blue, enabled: false }
+  - { id: shodan, name: Shodan Blog (stale since 2024), url: "https://blog.shodan.io/rss/", tier: C, group: blue, enabled: false }
+  - { id: grahamcluley, name: Graham Cluley, url: "https://grahamcluley.com/feed/", tier: C, group: news, enabled: false }
+  - { id: bellingcat, name: Bellingcat, url: "https://www.bellingcat.com/feed/", tier: C, group: news, enabled: false }
+  - { id: miessler, name: Daniel Miessler, url: "https://danielmiessler.com/feed.rss", tier: C, group: news, enabled: false }
+  - { id: zdi-upcoming, name: ZDI Upcoming (vendor-only stubs), url: "https://www.zerodayinitiative.com/rss/upcoming/", tier: A, group: vuln, enabled: false }
+
+# Deliberately NOT added (2026-11-23):
+#   Ransomware.live rss.xml / cyberattacks.xml, RansomLook RSS, Ransom Feed: every item is a victim name, which
+#     CyberDigest never publishes (and Ransomware.live's terms forbid republishing its raw data). Their activity is
+#     already counted, without names, through the RansomLook API and the optional Ransomware.live PRO key.
+#   BleepingComputer ransomware tag feed: /tag/ransomware/feed/ returns 404 (main feed above already covers it).
+#   NCSC UK all-rss-feed.xml: superset of the reports + news feeds above, plus board-level guidance posts.
+#   Proofpoint /us/rss.xml: corporate press feed; the Threat Insight feed above is the research stream.
+#   CISA all.xml: superset of the CISA component feeds above (kept disabled).
+#   Trend Micro Research (feeds.trendmicro.com/TrendMicroResearch): connection fails (re-checked 2026-11-23).
+#   MyJoyOnline (Ghana) ransomware tag: last item July 2025. Red Canary: replaced by Zscaler ThreatLabz above.
+#   Halcyon, Symantec/security.com, Emsisoft, Ridgeline Cyber: no working RSS (page-monitoring only).
+#
+# No working feed found on 2026-11-23 (would need scraping or a CISA/CCCS proxy):
+#   Trend Micro Research (moved to trendaisecurity.com, no RSS), Symantec Threat Hunter,
+#   NCC Group Research, Packet Storm (RSS decommissioned 2025), ENISA (RSS discontinued),
+#   VMware/Broadcom advisories, SANS DFIR blog, Citrix, Atlassian, Apple, Mozilla, SonicWall.
+#   Their advisories reach CISA Alerts and CCCS (both above), usually within a day.

@@ -1,0 +1,44 @@
+{
+  "name": "cyberdigest",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Low-noise, near-realtime cybersecurity intelligence dashboard built from curated feeds, CISA KEV, EPSS and CVE data.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "pipeline": "tsx pipeline/src/build.ts",
+    "dicts": "tsx pipeline/src/dicts.ts",
+    "check-feeds": "tsx pipeline/scripts/check-feeds.ts",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit && svelte-check --tsconfig ./tsconfig.web.json --fail-on-warnings"
+  },
+  "dependencies": {
+    "entities": "^9.0.0",
+    "fast-xml-parser": "^5.12.1",
+    "fflate": "^0.8.3",
+    "i18n-iso-countries": "^7.14.0",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@types/d3-geo": "^3.1.1",
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^26.6.6",
+    "@types/topojson-client": "^3.1.5",
+    "d3-geo": "^3.1.2",
+    "svelte": "^5.59.1",
+    "svelte-check": "^4.7.8",
+    "topojson-client": "^3.1.0",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.1",
+    "world-atlas": "^2.0.2"
+  }
+}

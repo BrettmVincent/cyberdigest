@@ -1,0 +1,46 @@
+# Ransomware group name normalisation.
+# Every ransomware source spells groups differently (RansomLook "inc ransom", ransomware.live "incransom",
+# Will Thomas's matrices "INC Ransom", ThreatLabz folders "INC"). Names are matched after lowercasing and
+# removing everything except letters and digits. The MISP galaxy ransomware cluster supplies more aliases
+# automatically; entries here take precedence. Add a line when two spellings of one group don't merge.
+groups:
+  - { name: Akira, aliases: [akira] }
+  - { name: Qilin, aliases: [qilin, agenda] }
+  - { name: BlackCat (ALPHV), aliases: [alphv, blackcat, noberus, alphvm] }
+  - { name: LockBit, aliases: [lockbit, lockbit2, lockbit3, lockbit30, lockbit5, lockbitblack, lockbit50] }
+  - { name: INC Ransom, aliases: [inc, incransom, inc ransom] }
+  - { name: The Gentlemen, aliases: [thegentlemen, gentlemen] }
+  - { name: RansomHub, aliases: [ransomhub] }
+  - { name: Black Basta, aliases: [blackbasta] }
+  - { name: BlackSuit, aliases: [blacksuit, royal] }
+  - { name: Play, aliases: [play, playcrypt] }
+  - { name: Cl0p, aliases: [clop, cl0p, ta505] }
+  - { name: DragonForce, aliases: [dragonforce] }
+  - { name: SafePay, aliases: [safepay] }
+  - { name: Medusa, aliases: [medusa, medusablog] }
+  - { name: Hunters International, aliases: [hunters, huntersinternational, worldleaks, world leaks] }
+  - { name: 8Base, aliases: [8base, phobos8base] }
+  - { name: BianLian, aliases: [bianlian] }
+  - { name: Rhysida, aliases: [rhysida] }
+  - { name: Cactus, aliases: [cactus] }
+  - { name: Interlock, aliases: [interlock] }
+  - { name: Sinobi, aliases: [sinobi] }
+  - { name: NightSpire, aliases: [nightspire] }
+  - { name: Kairos, aliases: [kairos] }
+  - { name: Everest, aliases: [everest] }
+  - { name: Embargo, aliases: [embargo] }
+  - { name: Warlock, aliases: [warlock, storm2603] }
+  - { name: Beast, aliases: [beast] }
+  - { name: Fog, aliases: [fog] }
+  - { name: 3AM, aliases: [3am, threeam] }
+  - { name: Termite, aliases: [termite, babuk2, babuk20] }
+  - { name: REvil, aliases: [revil, sodinokibi] }
+  - { name: Conti, aliases: [conti] }
+  - { name: Hive, aliases: [hive] }
+  - { name: Black Kingdom, aliases: [blackkingdom] }
+  - { name: Scattered Spider, aliases: [scatteredspider, octotempest, unc3944] }
+  - { name: ShinyHunters, aliases: [shinyhunters, scatteredlapsus, scatteredlapsushunters, slsh] }
+  - { name: Crypto24, aliases: [crypto24] }
+  - { name: Devman, aliases: [devman] }
+  - { name: Nova, aliases: [nova, novagroup] }
+  - { name: Pioneer Kitten, aliases: [pioneerkitten, foxkitten] }

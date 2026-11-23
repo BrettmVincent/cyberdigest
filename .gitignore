@@ -1,0 +1,11 @@
+node_modules/
+dist/
+# Pipeline output is generated on every run and published with the site.
+web/public/data/
+# Pipeline state lives on the orphan `data` branch, not on main.
+state/
+*.tmp
+.DS_Store
+Thumbs.db
+.env
+.env.*

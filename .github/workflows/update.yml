@@ -1,0 +1,98 @@
+name: Update CyberDigest
+
+# Fetch feeds + enrichment, rebuild the dashboard, deploy to GitHub Pages.
+# Off-peak minutes avoid the top-of-hour scheduling backlog on GitHub Actions.
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore: ['**.md', 'LICENSE', '.github/dependabot.yml']
+
+permissions: {}
+
+# Queue rather than cancel: a cancelled run could leave the state branch mid-update.
+concurrency:
+  group: update
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write # push pipeline state to the `data` branch
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Restore pipeline state (data branch)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          url="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git ls-remote --exit-code --heads "$url" data >/dev/null 2>&1; then
+            git clone --quiet --depth 1 --branch data --single-branch "$url" state
+          else
+            echo "No data branch yet: starting with empty state."
+            mkdir -p state
+            git -C state init --quiet -b data
+            git -C state remote add origin "$url"
+          fi
+
+      - name: Run pipeline
+        env:
+          # Raises GitHub API / raw limits (cvelistV5, PoC-in-GitHub, matrix dates, ThreatLabz note counts).
+          GITHUB_TOKEN: ${{ github.token }}
+          # Optional free keys: each source is skipped cleanly when its secret is not set.
+          RANSOMWARE_LIVE_KEY: ${{ secrets.RANSOMWARE_LIVE_KEY }}
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+          CIRCL_API_KEY: ${{ secrets.CIRCL_API_KEY }}
+        run: npm run pipeline
+
+      - name: Save pipeline state
+        run: |
+          set -euo pipefail
+          cd state
+          git config user.name "cyberdigest-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "State unchanged."
+            exit 0
+          fi
+          # A single orphan commit, force-pushed: the data branch never accumulates history.
+          # Each push also counts as repository activity, so the schedule is not auto-disabled.
+          git checkout --quiet --orphan snapshot
+          git commit --quiet -m "state $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push --quiet --force origin snapshot:data
+
+      - run: npm run build
+
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
