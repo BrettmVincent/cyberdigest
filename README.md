@@ -5,9 +5,14 @@
   </picture>
 </p>
 
+<h3 align="center"><a href="https://brettmvincent.github.io/cyberdigest/">▶ Open the dashboard: brettmvincent.github.io/cyberdigest</a></h3>
+
+<p align="center">Nothing to install, no account, no setup: just open the link in any modern browser.<br>
+Data refreshes automatically every ~15 minutes. Your watchlist, stars and theme are saved in your own browser.</p>
+
 A low-noise, near-realtime cybersecurity intelligence dashboard for SOC, CTI and vulnerability-management work.
 
-CyberDigest pulls ~80 curated feeds (CERTs, vendor PSIRTs, threat research, a few news outlets) plus CISA KEV, FIRST EPSS, CVE records and public-PoC data. It folds duplicate coverage into single stories and ranks them with transparent rules. Each story shows **why** it ranks where it does. It runs entirely on GitHub: Actions refreshes the data every 15 minutes and Pages serves the dashboard. No servers, no API keys, no LLM.
+CyberDigest pulls ~100 curated feeds (CERTs, vendor PSIRTs, threat research, a few news outlets) plus CISA KEV, FIRST EPSS, CVE records and public-PoC data. It folds duplicate coverage into single stories and ranks them with transparent rules. Each story shows **why** it ranks where it does. It runs entirely on GitHub: Actions refreshes the data every 15 minutes and Pages serves the dashboard. No servers, no API keys, no LLM.
 
 ## What you get
 
@@ -77,7 +82,12 @@ GitHub Actions (every 15 min, off-peak minutes)
 - **Freshness:** expect data 15–40 minutes behind real time, because of the cron interval, Actions scheduling delays and the 10-minute Pages CDN cache. The header always shows "Updated N min ago". It turns amber after 45 minutes and red after 90.
 - **Entity dictionary:** rebuilt weekly from the MISP galaxy (threat actors, ransomware, Malpedia, MITRE ATT&CK groups and software) plus CISA KEV vendor names and a product→vendor alias map in [`pipeline/src/dicts.ts`](pipeline/src/dicts.ts).
 
-## Setup (one time)
+## Maintainers only: running a copy
+
+> **Visitors don't need anything in this section.** The dashboard above is already hosted and updated automatically.
+> These notes are for whoever maintains this deployment, or for anyone who wants to fork it and run their own.
+
+### Setup (one time)
 
 1. Create a **public** repository named `cyberdigest`. GitHub Pages on the Free plan requires a public repo.
 2. Push this code to `main`.
@@ -97,11 +107,11 @@ Add these under **Settings → Secrets and variables → Actions**. Each source 
 | `NVD_API_KEY` | nvd.nist.gov/developers/request-an-api-key | Faster NVD paging (works without a key, just slower) |
 | `CIRCL_API_KEY` | vulnerability.circl.lu account | 40 instead of 20 requests/min to CIRCL Vulnerability-Lookup |
 
-### Ransomware data policy
+## Ransomware data policy
 
 CyberDigest never publishes victim names, victim logos, negotiation-chat text, ransom-note text, wallet addresses or IOC lists. Upstream records are reduced to counts in memory during the Actions run. Only counts, CVE/tool mappings and links reach the repo and the site. A unit test enforces this by feeding victim names through the real fetch path and asserting none appear in the output or the stored state.
 
-## Local development
+## Local development (maintainers only)
 
 ```bash
 npm ci
@@ -112,7 +122,7 @@ npm run typecheck
 npm run check-feeds   # re-test every feed URL (add -- --all to include disabled ones)
 ```
 
-## Editing feeds
+## Editing feeds (maintainers only)
 
 Edit [`config/feeds.yaml`](config/feeds.yaml). Each feed has a tier (A advisory / B research / C news) and a group. Optional fields:
 
