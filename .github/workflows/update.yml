@@ -33,7 +33,8 @@ jobs:
           node-version: 24
           cache: npm
 
-      - run: npm ci
+      # `npm install` (not `npm ci`): see ci.yml; Linux npm ci rejects the Windows-generated lockfile's optional deps.
+      - run: npm install --no-audit --no-fund
 
       - name: Restore pipeline state (data branch)
         env:
