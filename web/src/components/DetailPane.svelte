@@ -5,6 +5,7 @@
   import HoverCard from './HoverCard.svelte';
   import { GROUP_LABELS, PRIORITY_LABELS } from '../../../shared/types';
   import { copyText, daysUntil, deltaText, epssText, fmtDate, fmtDateTime, safeHref } from '../lib/format';
+  import { euvdUrl, ghsaUrl, osvUrl } from '../lib/links';
   import { prefs, term, toggleIn, type TermKind } from '../lib/prefs.svelte';
   import { q } from '../lib/query';
   import { toast } from '../lib/toast.svelte';
@@ -151,6 +152,9 @@
             <div class="cve-links">
               <a href="https://www.cve.org/CVERecord?id={c.id}" target="_blank" rel="noopener noreferrer">cve.org ↗</a>
               <a href="https://nvd.nist.gov/vuln/detail/{c.id}" target="_blank" rel="noopener noreferrer">NVD ↗</a>
+              {#if c.euvd}<a href={euvdUrl(c.euvd)} target="_blank" rel="noopener noreferrer" title="ENISA European Vulnerability Database">{c.euvd} ↗</a>{/if}
+              {#if c.oss?.ghsa && !c.oss.packages.length}<a href={ghsaUrl(c.oss.ghsa)} target="_blank" rel="noopener noreferrer">{c.oss.ghsa} ↗</a>{/if}
+              {#if c.oss?.osv && !c.oss.packages.length}<a href={osvUrl(c.id)} target="_blank" rel="noopener noreferrer">OSV ↗</a>{/if}
             </div>
           </li>
         {/each}

@@ -162,8 +162,9 @@ export class Circl {
     reg.set('rulezet', { status: 'ok', detail: `${ok} hot CVEs checked this run; ${Object.keys(this.state.rulezet).length} cached`, retrieved: ok > 0 });
   }
 
-  exploitation(cve: string, inCisaKev: boolean): CveInfo['exploitation'] | undefined {
-    const catalogs = this.state.kev[cve] ?? [];
+  /** `extra`: catalogue names from other sources (e.g. VulnCheck KEV) merged with CIRCL's. */
+  exploitation(cve: string, inCisaKev: boolean, extra: string[] = []): CveInfo['exploitation'] | undefined {
+    const catalogs = [...new Set([...(this.state.kev[cve] ?? []), ...extra])].sort();
     let e = 0;
     let p = 0;
     let honeypot7d = false;

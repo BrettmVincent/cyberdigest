@@ -8,6 +8,9 @@ import { catalogName, classifySighting } from '../src/enrich/circl';
 import { diffSnapshots } from '../src/enrich/epss';
 import { trackRansomwareFlips, type KevCatalog } from '../src/enrich/kev';
 import { summarizeNvd } from '../src/enrich/nvd';
+import { parseEuvdMapping } from '../src/enrich/euvd';
+import { summarizeGhsa, summarizeOsv } from '../src/enrich/oss';
+import { parseVulncheckPage } from '../src/enrich/vulncheck';
 import { scoreStory, type ScoreItem } from '../src/score';
 import { StateStore } from '../src/state';
 
@@ -135,5 +138,62 @@ describe('new scoring rules', () => {
   it('honeypot hits and KEV ransomware flips are P2', () => {
     expect(score(cve({ exploitation: { catalogs: [], notInCisa: false, exploited30d: 4, poc30d: 0, honeypot7d: true } })).priority).toBe(2);
     expect(score(cve({ ransomware: { kevKnown: true, flippedAt: '2026-11-20', groups: [] } })).reasons.map((r) => r.code)).toContain('kev-ransom-flip');
+  });
+});
+
+describe('CVE source parsers (EUVD, GitHub Advisory Database, OSV, VulnCheck KEV)', () => {
+  it('keeps only tracked CVEs from the EUVD mapping dump', () => {
+    const csv = 'euvd_id,cve_id\nEUVD-2024-31700,CVE-2024-3094\nEUVD-1999-0001,CVE-1999-0001\r\nbad,CVE-2024-0001\n';
+    expect(parseEuvdMapping(csv, new Set(['CVE-2024-3094', 'CVE-2024-0001']))).toEqual({ 'CVE-2024-3094': 'EUVD-2024-31700' });
+  });
+
+  it('summarises a reviewed GitHub advisory (packages, fixed versions, de-duplicated)', () => {
+    const list = [
+      {
+        ghsa_id: 'GHSA-35jh-r3h4-6jhm',
+        type: 'reviewed',
+        vulnerabilities: [
+          { package: { ecosystem: 'npm', name: 'lodash' }, first_patched_version: '4.17.21' },
+          { package: { ecosystem: 'npm', name: 'lodash' }, first_patched_version: '4.17.21' },
+          { package: { ecosystem: 'npm', name: 'lodash.template' }, first_patched_version: null },
+          { package: { ecosystem: 'maven', name: 'org.x:y' }, first_patched_version: { identifier: '2.0.1' } },
+        ],
+      },
+    ];
+    expect(summarizeGhsa(list)).toEqual({
+      ghsa: 'GHSA-35jh-r3h4-6jhm',
+      packages: [
+        { ecosystem: 'npm', name: 'lodash', fixed: '4.17.21' },
+        { ecosystem: 'npm', name: 'lodash.template' },
+        { ecosystem: 'maven', name: 'org.x:y', fixed: '2.0.1' },
+      ],
+    });
+    expect(summarizeGhsa([])).toEqual({ packages: [] });
+    expect(summarizeGhsa([{ ghsa_id: 'GHSA-mal', type: 'malware', vulnerabilities: [] }])).toEqual({ packages: [] });
+  });
+
+  it('summarises an OSV record and a missing one', () => {
+    expect(summarizeOsv({ id: 'CVE-2021-23337', aliases: ['GHSA-35jh-r3h4-6jhm'], related: ['A', 'B'] })).toEqual({ osv: true, related: 2, ghsaAlias: 'GHSA-35jh-r3h4-6jhm' });
+    expect(summarizeOsv(undefined)).toEqual({ osv: false, related: 0 });
+  });
+
+  it('parses a VulnCheck KEV page and its cursor', () => {
+    const page = {
+      _meta: { next_cursor: 'abc' },
+      data: [
+        { cve: ['CVE-2024-4577'], date_added: '2024-06-07T00:00:00Z' },
+        { cve: ['cve-2023-1111', 'not-a-cve'], cisa_date_added: '2023-01-02T00:00:00Z' },
+      ],
+    };
+    expect(parseVulncheckPage(page)).toEqual({ entries: [['CVE-2024-4577', '2024-06-07'], ['CVE-2023-1111', '2023-01-02']], next: 'abc' });
+    expect(parseVulncheckPage({ _meta: {}, data: [] })).toEqual({ entries: [] });
+  });
+
+  it('VulnCheck KEV listing alone raises a recent CVE to P2 when CISA has not listed it', () => {
+    const items: ScoreItem[] = [{ feedId: 'f', tier: 'B', firehose: false, time: Date.parse('2026-11-20'), exploited: false, cves: ['CVE-2026-0001'], focalCves: ['CVE-2026-0001'], hasThreatEntity: false }];
+    const info = { id: 'CVE-2026-0001', published: '2026-11-01', epss: null, epssPct: null, epssDelta: null, stories: [], sources: 0, firstSeen: '', lastSeen: '', exploitation: { catalogs: ['VulnCheck KEV'], notInCisa: true, exploited30d: 0, poc30d: 0, honeypot7d: false } } as CveInfo;
+    const r = scoreStory(items, () => info, Date.parse('2026-11-24'));
+    expect(r.priority).toBe(2);
+    expect(r.reasons[0]).toMatchObject({ code: 'exploited-multi', label: 'Exploited: VulnCheck KEV' });
   });
 });

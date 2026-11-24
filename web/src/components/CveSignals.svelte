@@ -2,7 +2,7 @@
   // Ransomware, multi-source exploitation and detection-coverage signals for one CVE.
   import type { CveInfo } from '../../../shared/types';
   import { fmtDate } from '../lib/format';
-  import { circlUrl, nucleiUrl, ROLE_LABEL, rvmUrl, sigmaUrl } from '../lib/links';
+  import { circlUrl, ghsaUrl, nucleiUrl, osvUrl, ROLE_LABEL, rvmUrl, sigmaUrl } from '../lib/links';
 
   interface Props {
     info: CveInfo;
@@ -16,9 +16,11 @@
   const ex = $derived(info.exploitation);
   const det = $derived(info.detections);
   const detTotal = $derived(det ? (det.nuclei ? 1 : 0) + det.sigma.length + det.et.length + det.yara.length : 0);
+  const oss = $derived(info.oss?.packages.length ? info.oss : undefined);
+  const PKG_SHOWN = 3;
 </script>
 
-{#if rw || ex || det || info.detectionGap}
+{#if rw || ex || det || info.detectionGap || oss}
   <div class="signals" class:compact>
     {#if rw}
       <div class="sig">
@@ -56,6 +58,22 @@
           {#if det?.et.length}{det.nuclei || det.sigma.length ? ' · ' : ''}<span title={det.et.map((e) => `${e.sid}: ${e.msg}`).join('\n')}>ET Open ×{det.et.length}</span>{/if}
           {#if det?.yara.length} · <span title={det.yara.join('\n')}>YARA ×{det.yara.length}</span>{/if}
           {#if det?.rulezet} · {#if compact}Rulezet ×{det.rulezet}{:else}<a href={circlUrl(info.id)} target="_blank" rel="noopener noreferrer">Rulezet ×{det.rulezet} ↗</a>{/if}{/if}
+        </span>
+      </div>
+    {/if}
+    {#if oss}
+      <div class="sig">
+        <span class="badge">Open source</span>
+        <span class="text">
+          {#each oss.packages.slice(0, compact ? 2 : PKG_SHOWN) as p, i (p.ecosystem + p.name)}
+            {i ? ' · ' : ''}<span class="muted">{p.ecosystem}</span> <b>{p.name}</b>
+            {#if p.fixed}<span title="First patched version (GitHub Advisory Database)"> → fixed {p.fixed}</span>{:else}<span class="muted"> → no fix listed</span>{/if}
+          {/each}
+          {#if oss.packages.length > (compact ? 2 : PKG_SHOWN)}<span class="muted"> · +{oss.packages.length - (compact ? 2 : PKG_SHOWN)} more</span>{/if}
+          {#if !compact}
+            {#if oss.ghsa}<a class="src" href={ghsaUrl(oss.ghsa)} target="_blank" rel="noopener noreferrer">GitHub Advisory ↗</a>{/if}
+            {#if oss.osv}<a class="src" href={osvUrl(info.id)} target="_blank" rel="noopener noreferrer" title={oss.related ? `${oss.related} related advisories on OSV.dev` : 'OSV.dev'}>OSV{oss.related ? ` (+${oss.related})` : ''} ↗</a>{/if}
+          {/if}
         </span>
       </div>
     {/if}

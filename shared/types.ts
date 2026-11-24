@@ -200,7 +200,7 @@ export interface CveInfo {
     flippedAt?: string;
     groups: { name: string; role: GroupRole }[];
   };
-  /** Multi-source exploitation evidence from CIRCL Vulnerability-Lookup. */
+  /** Multi-source exploitation evidence: CIRCL Vulnerability-Lookup catalogues + sightings, and VulnCheck KEV. */
   exploitation?: {
     catalogs: string[];
     notInCisa: boolean;
@@ -213,6 +213,17 @@ export interface CveInfo {
   /** Exploited (KEV / CIRCL) but no public detection found in the indexed repositories. */
   detectionGap?: boolean;
   nvd?: { status: string; cpes: number };
+  /** ENISA EUVD identifier (EUVD-YYYY-N). */
+  euvd?: string;
+  /** Open-source package data: GitHub Advisory Database (reviewed) + OSV.dev. */
+  oss?: {
+    ghsa?: string;
+    packages: { ecosystem: string; name: string; fixed?: string }[];
+    /** An OSV.dev record exists for this CVE. */
+    osv: boolean;
+    /** Related advisories listed by OSV (distro / ecosystem advisories). */
+    related: number;
+  };
   stories: string[];
   sources: number;
   firstSeen: string;

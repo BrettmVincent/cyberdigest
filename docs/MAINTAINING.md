@@ -20,7 +20,8 @@ CyberDigest pulls ~100 curated feeds (CERTs, vendor PSIRTs, threat research, a f
   - a tool-hunting list for this month's most active groups.
 - **Richer CVE cards:** each CVE card shows:
   - "Ransomware: Known (CISA) · Qilin, Akira";
-  - multi-source exploitation from CIRCL Vulnerability-Lookup (CISA, ENISA, Shadowserver honeypots and others, including CVEs exploited but not yet in CISA KEV);
+  - multi-source exploitation from CIRCL Vulnerability-Lookup (CISA, ENISA, Shadowserver honeypots and others) and, with a free key, VulnCheck KEV, including CVEs exploited but not yet in CISA KEV;
+  - for open-source CVEs, the affected packages and first fixed version (GitHub Advisory Database), with GHSA, OSV.dev and ENISA EUVD links;
   - public detection content (Nuclei, Sigma, ET Open, YARA Forge, CIRCL Rulezet);
   - a **detection gap** flag for exploited CVEs with no public rule.
 - **Priority queue, not a newspaper.** Stories are banded P1 *Act now* → P4 *Context*. P4 is hidden by default. Each row shows the rules that fired (`KEV +2d`, `SSVC: active`, `EPSS 15% (92nd)`, `New public PoC`, `5 sources in 24h`).
@@ -103,6 +104,7 @@ Add these under **Settings → Secrets and variables → Actions**. Each source 
 | `RANSOMWARE_LIVE_KEY` | Free PRO key at ransomware.live/my | Leak-site claim counts by group, sector and victim country (aggregated; raw data is never published) |
 | `NVD_API_KEY` | nvd.nist.gov/developers/request-an-api-key | Faster NVD paging (works without a key, just slower) |
 | `CIRCL_API_KEY` | vulnerability.circl.lu account | 40 instead of 20 requests/min to CIRCL Vulnerability-Lookup |
+| `VULNCHECK_API_KEY` | Free Community account at vulncheck.com → Settings → Tokens | Adds the **VulnCheck KEV** catalogue to exploitation evidence (refreshed daily; attribution shown as required) |
 
 ## Ransomware data policy
 
@@ -151,6 +153,10 @@ Dropped feeds are kept with `enabled: false` and a reason.
 | Ransomware Vulnerability Matrix & Tool Matrix (Will Thomas) | CVE → ransomware group, tool → group | CC BY 4.0 (parsed and normalised) |
 | CIRCL Vulnerability-Lookup | multi-catalogue KEV, exploitation sightings (counts), Rulezet rule counts | Per catalogue; CIRCL open data CC BY 4.0 |
 | NIST NVD | analysis status, CPE count, CVSS fallback | Public domain; *uses NVD data but is not endorsed or certified by the NVD* |
+| ENISA EUVD | EUVD identifiers + links (daily mapping dump) | Reproduction authorised with acknowledgement of the source |
+| GitHub Advisory Database | GHSA ID, affected open-source packages, first patched version | CC BY 4.0 |
+| OSV.dev | OSV record + related advisories (links) | CC BY 4.0 (per-source licences apply) |
+| VulnCheck KEV (optional key) | additional exploited-CVE catalogue | VulnCheck Community terms; shown as "VulnCheck KEV" |
 | Nuclei templates, ET Open, SigmaHQ, YARA Forge | "detection exists" + links (no rule bodies) | MIT / BSD–GPLv2 / DRL 1.1 / GPL-3.0 |
 | RansomLook | leak-site post counts per group and week | CC BY 4.0 |
 | Ransomware.live (optional key) | claim counts per group, sector and country | Non-commercial use with attribution; no raw data republished |

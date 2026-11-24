@@ -32,6 +32,9 @@ import { canonicalUrl, clamp, titleTokens, toPlainText } from './text';
 import { detectionCount, loadDetectionIndex } from './detections';
 import { Circl } from './enrich/circl';
 import { updateNvd } from './enrich/nvd';
+import { updateEuvd } from './enrich/euvd';
+import { updateOss } from './enrich/oss';
+import { updateVulncheck, VULNCHECK_CATALOG } from './enrich/vulncheck';
 import { extractCountries } from './geo';
 import { buildRansomware } from './ransomware/activity';
 import { GroupResolver } from './ransomware/aliases';
@@ -273,7 +276,7 @@ async function main(): Promise<void> {
     kevIndex.has(id) ? 0 : curatedCves.has(id) || rvmByCve.has(id) ? 1 : (epssScores.get(id)?.epss ?? 0) >= CONFIG.rules.epssHigh ? 2 : 3;
   const tracked = [...trackedSet].sort((a, b) => importance(a) - importance(b) || b.localeCompare(a, 'en', { numeric: true }));
   const circl = new Circl(up);
-  const [cveHealth, pocHealth, nvd, detIndex] = await Promise.all([
+  const [cveHealth, pocHealth, nvd, detIndex, , euvd, oss, vulncheck] = await Promise.all([
     enrichCves(tracked, cveCache),
     enrichPoc(tracked, pocCache),
     updateNvd(up, trackedSet, reg),
@@ -282,6 +285,9 @@ async function main(): Promise<void> {
       await circl.updateKev(reg);
       await circl.updateSightings(reg);
     })(),
+    updateEuvd(up, trackedSet, reg),
+    updateOss(up, tracked, reg),
+    updateVulncheck(up, reg),
   ]);
   fromHealth('epss', epss.health, true);
   reg.set('epss', { version: epss.data.model });
@@ -297,7 +303,8 @@ async function main(): Promise<void> {
     const p = pocCache[id];
     const groups = rvmByCve.get(id);
     const n = nvd.get(id);
-    const exploitation = circl.exploitation(id, Boolean(k));
+    const exploitation = circl.exploitation(id, Boolean(k), vulncheck.has(id) ? [VULNCHECK_CATALOG] : []);
+    const o = oss.get(id);
     if (!rec && !k && !s && !groups && !exploitation) return undefined;
     const prev = epss.data.prev.get(id);
     const det = detIndex?.cves[id];
@@ -334,6 +341,8 @@ async function main(): Promise<void> {
       exploitation,
       detections: det ? { ...det, ...(circl.rulezetCount(id) !== undefined ? { rulezet: circl.rulezetCount(id) } : {}) } : undefined,
       nvd: n ? { status: n.status, cpes: n.cpes } : undefined,
+      euvd: euvd.get(id),
+      oss: o && (o.ghsa || o.osv || o.packages.length) ? { ...(o.ghsa ? { ghsa: o.ghsa } : {}), packages: o.packages, osv: o.osv, related: o.related } : undefined,
       stories: [],
       sources: 0,
       firstSeen: '',

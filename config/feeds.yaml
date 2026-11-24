@@ -64,6 +64,7 @@ feeds:
   - { id: tenable, name: Tenable, url: "https://www.tenable.com/blog/feed", tier: B, group: vuln }
   - { id: certcc, name: CERT/CC Vulnerability Notes, url: "https://kb.cert.org/vuls/atomfeed/", tier: A, group: vuln }
   - { id: vulncheck, name: VulnCheck, url: "https://www.vulncheck.com/feed/blog/atom.xml", tier: B, group: vuln }
+  - { id: wordfence, name: Wordfence (WordPress vulnerabilities), url: "https://www.wordfence.com/feed/", tier: B, group: vuln }
   - { id: watchtowr, name: watchTowr Labs, url: "https://labs.watchtowr.com/rss/", tier: B, group: vuln }
   - { id: horizon3, name: Horizon3.ai, url: "https://horizon3.ai/feed/", tier: B, group: vuln }
   - { id: slcyber, name: Searchlight Cyber Research, url: "https://www.slcyber.io/research/rss.xml", tier: B, group: vuln }
