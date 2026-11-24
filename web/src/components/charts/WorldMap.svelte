@@ -123,6 +123,7 @@
     {:else}
       <span class="muted">{modeLabel[mode]}:</span>
       {#each LEGEND as l, i (l)}<span class="legend-key"><span class="legend-swatch seq-{i + 1}"></span>{l}</span>{/each}
+      {#if hotspots.length}<span class="legend-key"><span class="legend-dot"></span>top {hotspots.length}</span>{/if}
     {/if}
   </div>
 </div>
@@ -224,6 +225,15 @@
     margin-top: 3px;
     color: var(--muted);
     font-size: 10.5px;
+  }
+  .legend-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-right: 4px;
+    border-radius: 50%;
+    background: var(--text);
+    box-shadow: 0 0 0 1.5px var(--surface);
   }
   .legend {
     display: flex;

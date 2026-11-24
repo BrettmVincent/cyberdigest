@@ -129,6 +129,8 @@ Edit [`config/feeds.yaml`](../config/feeds.yaml). Each feed has a tier (A adviso
 - `firehose: true` for bulk advisory streams
 - `aggregator: true` for feeds that re-publish every CVE (e.g. cve.now): they never count towards "N sources in 24h", "Exploitation reported" or source counts
 - `retainDays: N` to keep a high-volume feed's items for fewer than the default 30 days
+- `dates: first-seen` for feeds with unreliable or backdated dates (e.g. Exploit-DB): items are dated when CyberDigest first sees them; the first run only records a baseline
+- After changing title filters or dating logic in code, bump `FEED_LOGIC_VERSION` in `pipeline/src/build.ts` so every feed is re-parsed once
 - `marketing: false` to disable the vendor-marketing title filter
 - custom `headers`
 

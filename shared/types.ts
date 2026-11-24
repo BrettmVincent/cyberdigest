@@ -375,6 +375,8 @@ export interface FeedHealth {
   consecutiveFailures: number;
   itemsPerWeek: number;
   newestItem?: string;
+  /** Newest entry date in the feed itself, even when older than the retention window. */
+  latestEntry?: string;
   possibleGap: boolean;
   ms?: number;
   bytes?: number;

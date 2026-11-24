@@ -1,7 +1,7 @@
 // Token search: free text plus field filters, e.g.
 //   vendor:fortinet kev:yes since:7d "remote code"   actor:"Volt Typhoon"   p:1,2   tier:A
 import type { ActorProfile, CveInfo, Priority, SourceTier, Story } from '../../../shared/types';
-import { parseTerm } from './prefs.svelte';
+import { parseTerm } from './terms';
 
 export interface Query {
   text: string[];
@@ -41,9 +41,9 @@ export const QUERY_HELP: [string, string][] = [
   ['tier:A', 'lead source tier (A advisory, B research, C news)'],
   ['since:24h', 'last seen within 6h / 24h / 3d / 7d …'],
   ['feed:cisa', 'source feed id or name'],
-  ['country:UA', 'country named in the story (ISO code)'],
-  ['origin:RU', 'mentions an actor attributed to this country'],
-  ['target:DE', 'mentions an actor known to target this country'],
+  ['country:UA', 'country named in the story (ISO code or name: country:ukraine)'],
+  ['origin:RU', 'mentions an actor attributed to this country (code or name)'],
+  ['target:DE', 'mentions an actor known to target this country (code or name)'],
   ['date:2026-11-20', 'first reported on this day'],
   ['ransomware:yes', 'CVE linked to ransomware (or ransomware:qilin)'],
   ['exploited-by:enisa', 'CVE listed as exploited by ENISA / Shadowserver / …'],
@@ -108,7 +108,6 @@ export function parseQuery(q: string): Query {
         break;
       case 'malware':
       case 'm':
-      case 'ransomware':
         out.malware.push(lower);
         break;
       case 'cve':
@@ -144,14 +143,15 @@ export function parseQuery(q: string): Query {
       case 'on':
         if (/^\d{4}-\d{2}-\d{2}$/.test(lower)) out.date = lower;
         break;
+      // Country values stay as typed (ISO code or name); matchStory resolves them via ctx.countryIso.
       case 'country':
-        out.country.push(lower.toUpperCase());
+        out.country.push(lower);
         break;
       case 'origin':
-        out.origin.push(lower.toUpperCase());
+        out.origin.push(lower);
         break;
       case 'target':
-        out.target.push(lower.toUpperCase());
+        out.target.push(lower);
         break;
       case 'ransomware':
       case 'rw':
@@ -185,6 +185,26 @@ export interface MatchContext {
   isWatched: (s: Story) => boolean;
   isStarred: (s: Story) => boolean;
   isNew: (s: Story) => boolean;
+  /** Resolve a country name or code ("ukraine", "uk", "UA") to ISO alpha-2. */
+  countryIso?: (value: string) => string | null;
+}
+
+const COUNTRY_SYNONYMS: Record<string, string> = {
+  uk: 'GB', britain: 'GB', 'great britain': 'GB', england: 'GB', usa: 'US', 'u.s.': 'US', 'u.s': 'US', america: 'US', 'united states of america': 'US',
+  russia: 'RU', 'south korea': 'KR', 'north korea': 'KP', dprk: 'KP', iran: 'IR', taiwan: 'TW', vietnam: 'VN', syria: 'SY', uae: 'AE', czech: 'CZ', 'czech republic': 'CZ', turkey: 'TR',
+};
+
+/** ISO alpha-2 for a typed value: a code ("ua"), a known synonym, or a name resolved by ctx.countryIso. */
+export function resolveCountry(value: string, ctx: Pick<MatchContext, 'countryIso'>): string {
+  const v = value.trim().toLowerCase();
+  if (COUNTRY_SYNONYMS[v]) return COUNTRY_SYNONYMS[v];
+  if (/^[a-z]{2}$/.test(v)) return v.toUpperCase();
+  return ctx.countryIso?.(v) ?? v.toUpperCase();
+}
+
+/** Story actor matches the term by canonical name or any MISP alias. */
+function actorMatches(s: Story, term: string, actors: Map<string, ActorProfile>): boolean {
+  return s.actors.some((a) => a.toLowerCase().includes(term) || (actors.get(a)?.aliases ?? []).some((x) => x.toLowerCase().includes(term)));
 }
 
 export function matchStory(s: Story, q: Query, ctx: MatchContext): boolean {
@@ -194,15 +214,24 @@ export function matchStory(s: Story, q: Query, ctx: MatchContext): boolean {
   if (q.exploited !== null && s.exploited !== q.exploited && !(q.exploited && s.reasons.some((r) => r.code.startsWith('kev') || r.code === 'ssvc-active'))) return false;
   if (q.kev !== null && s.cves.some((c) => ctx.cveInfo.get(c)?.kev) !== q.kev) return false;
   for (const v of q.vendor) if (!anyIncludes(s.vendors, v)) return false;
-  for (const a of q.actor) if (!anyIncludes(s.actors, a)) return false;
+  for (const a of q.actor) if (!actorMatches(s, a, ctx.actors)) return false;
   for (const m of q.malware) if (!anyIncludes(s.malware, m)) return false;
   for (const c of q.cve) if (!s.cves.some((x) => x.toLowerCase().slice(4).startsWith(c))) return false;
   for (const f of q.feed) if (![s.feedId, s.feed, ...s.sources.flatMap((x) => [x.feedId, x.feed])].some((x) => x.toLowerCase().includes(f))) return false;
   for (const g of q.group) if (!s.group.includes(g)) return false;
   if (q.date && s.date.slice(0, 10) !== q.date) return false;
-  for (const c of q.country) if (!(s.countries ?? []).includes(c)) return false;
-  for (const c of q.origin) if (!s.actors.some((a) => ctx.actors.get(a)?.country === c)) return false;
-  for (const c of q.target) if (!s.actors.some((a) => ctx.actors.get(a)?.targets.some((t) => t.iso === c))) return false;
+  for (const v of q.country) {
+    const c = resolveCountry(v, ctx);
+    if (!(s.countries ?? []).includes(c)) return false;
+  }
+  for (const v of q.origin) {
+    const c = resolveCountry(v, ctx);
+    if (!s.actors.some((a) => ctx.actors.get(a)?.country === c)) return false;
+  }
+  for (const v of q.target) {
+    const c = resolveCountry(v, ctx);
+    if (!s.actors.some((a) => ctx.actors.get(a)?.targets.some((t) => t.iso === c))) return false;
+  }
   if (q.ransomware.length || q.gap !== null || q.exploitedBy.length) {
     const infos = s.cves.map((c) => ctx.cveInfo.get(c)).filter((x): x is CveInfo => Boolean(x));
     for (const r of q.ransomware) {

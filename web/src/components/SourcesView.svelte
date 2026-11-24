@@ -74,6 +74,7 @@
             <td class="num muted">{f.lastOk ? ago(f.lastOk, now) : 'never'}</td>
             <td class="text-2">
               {#if f.error}{f.error}{/if}
+              {#if !f.newestItem && f.status !== 'error'}<span class="muted">{f.latestEntry ? `No posts in the last 30 days (latest ${fmtDate(f.latestEntry)})` : 'No posts in the last 30 days'}</span>{/if}
               {#if f.possibleGap}<span class="badge warn" title="Every item was new: the feed's window may have scrolled past items between runs">possible gap</span>{/if}
             </td>
           </tr>

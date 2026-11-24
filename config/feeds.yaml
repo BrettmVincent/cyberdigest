@@ -51,7 +51,7 @@ feeds:
   # Added from the "most reliable ransomware sources" list (verified 2026-11-23). Overlapping feeds are safe:
   # articles are de-duplicated by URL across feeds, and the higher-tier feed keeps ownership.
   - { id: coveware, name: Coveware (ransomware IR & payments), url: "https://coveware.com/feed/", tier: B, group: intel }
-  - { id: msft-secintel, name: Microsoft Security Intelligence, url: "https://www.microsoft.com/security/blog/tag/microsoft-security-intelligence/feed/", tier: B, group: intel }
+  - { id: msft-secintel, name: Microsoft Security Intelligence (100% subset of msft-ti), url: "https://www.microsoft.com/security/blog/tag/microsoft-security-intelligence/feed/", tier: B, group: intel, enabled: false }
   - { id: sophos-blog, name: Sophos News (all), url: "https://www.sophos.com/en-us/blog/feed?id=blt6f15f4f7deaf4242", tier: C, group: intel }
   - { id: sophos-ransomware, name: Sophos X-Ops (ransomware), url: "https://www.sophos.com/en-us/tag/ransomware/feed", tier: B, group: intel }
 
@@ -59,7 +59,7 @@ feeds:
   - { id: projectzero, name: Google Project Zero, url: "https://projectzero.google/feed.xml", tier: B, group: vuln }
   - { id: zdi-advisories, name: ZDI Published Advisories, url: "https://www.zerodayinitiative.com/rss/published/", tier: A, group: vuln, firehose: true }
   - { id: zdi-blog, name: ZDI Blog, url: "https://www.zerodayinitiative.com/blog?format=rss", tier: B, group: vuln }
-  - { id: exploitdb, name: Exploit-DB, url: "https://www.exploit-db.com/rss.xml", tier: C, group: vuln }
+  - { id: exploitdb, name: Exploit-DB, url: "https://www.exploit-db.com/rss.xml", tier: C, group: vuln, dates: first-seen } # feed backdates new entries
   - { id: qualys, name: Qualys Threat Research, url: "https://blog.qualys.com/feed", tier: B, group: vuln }
   - { id: tenable, name: Tenable, url: "https://www.tenable.com/blog/feed", tier: B, group: vuln }
   - { id: certcc, name: CERT/CC Vulnerability Notes, url: "https://kb.cert.org/vuls/atomfeed/", tier: A, group: vuln }
@@ -136,7 +136,7 @@ feeds:
   # ── Breaking news & investigative journalism ───────────────────────────────
   - { id: bleepingcomputer, name: BleepingComputer, url: "https://www.bleepingcomputer.com/feed/", tier: C, group: news }
   - { id: krebs, name: Krebs on Security, url: "https://krebsonsecurity.com/feed/", tier: C, group: news }
-  - { id: krebs-ransomware, name: Krebs on Security (ransomware), url: "https://krebsonsecurity.com/category/ransomware/feed/", tier: C, group: news }
+  - { id: krebs-ransomware, name: Krebs on Security (ransomware; 100% subset of krebs), url: "https://krebsonsecurity.com/category/ransomware/feed/", tier: C, group: news, enabled: false }
   - { id: darkreading, name: Dark Reading, url: "https://www.darkreading.com/rss.xml", tier: C, group: news }
   - { id: thehackernews, name: The Hacker News, url: "https://feeds.feedburner.com/TheHackersNews", tier: C, group: news }
   - { id: securityweek, name: SecurityWeek, url: "https://www.securityweek.com/feed/", tier: C, group: news }
@@ -167,8 +167,8 @@ feeds:
     group: news
     include: "ransomware|cyber|hack(er|ers|ed|ing|s)?\\b|breach|data leak|leaked|malware|phishing|extortion|vulnerab|exploit|infostealer|DDoS|spyware|SIM swap"
   - { <<: *za, id: za-itweb, name: ITWeb (ZA), url: "https://www.itweb.co.za/rss" }
-  - { <<: *za, id: za-mybroadband, name: MyBroadband Security (ZA), url: "https://mybroadband.co.za/news/security/feed" }
-  - { <<: *za, id: za-businesstech, name: BusinessTech (ZA), url: "https://businesstech.co.za/news/feed/" }
+  - { <<: *za, id: za-mybroadband, name: MyBroadband Security (ZA; blocks GitHub-hosted runners, HTTP 403), url: "https://mybroadband.co.za/news/security/feed", enabled: false }
+  - { <<: *za, id: za-businesstech, name: BusinessTech (ZA; blocks GitHub-hosted runners, HTTP 403), url: "https://businesstech.co.za/news/feed/", enabled: false }
   - { id: za-itonline, name: IT-Online Security (ZA), url: "https://it-online.co.za/category/security/feed/", tier: C, group: news }
 
   # ── Blue team, telemetry & DFIR ────────────────────────────────────────────

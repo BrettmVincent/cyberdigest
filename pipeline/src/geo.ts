@@ -39,6 +39,27 @@ const NOT_A_COUNTRY_NEXT = new Set(['ransomware', 'gang', 'malware', 'stealer', 
 const TOKEN_RE = /[A-Za-zÀ-ɏ0-9](?:[A-Za-zÀ-ɏ0-9.'’-]*[A-Za-zÀ-ɏ0-9])?/g;
 const tokenize = (s: string) => s.replace(/[’']s\b/g, '').match(TOKEN_RE) ?? [];
 
+/**
+ * Phrases that contain a country word but are not about that country (places, malware, idioms),
+ * or that name a publishing agency rather than where something happened ("the US Cybersecurity and
+ * Infrastructure Security Agency added…" is a source attribution, not a US event).
+ * Matched case-sensitively and consumed whole, so the country word inside them never counts.
+ */
+const NOT_A_COUNTRY_PHRASES = [
+  'British Columbia', 'New Mexico', 'New England', 'New South Wales', 'New Jersey', 'New Guinea',
+  'Latin America', 'Latin American', 'South America', 'South American', 'North America', 'North American', 'Central America', 'Central American',
+  'Indian Ocean', 'China Chopper', 'Dutch auction', 'Swiss cheese', 'Russian roulette', 'French fries',
+  'US Cybersecurity and Infrastructure Security Agency', 'U.S Cybersecurity and Infrastructure Security Agency', 'United States Cybersecurity and Infrastructure Security Agency', 'US CISA', 'U.S CISA',
+  'US National Vulnerability Database', 'U.S National Vulnerability Database', 'US NIST', 'U.S NIST',
+  'Canadian Centre for Cyber Security', 'Centre for Cybersecurity Belgium', 'Australian Cyber Security Centre', 'Australian Signals Directorate',
+].map((p) => tokenize(p));
+const PHRASE_MAX = Math.max(...NOT_A_COUNTRY_PHRASES.map((p) => p.length));
+const phraseIndex = new Set(NOT_A_COUNTRY_PHRASES.map((p) => p.join(' ')));
+
+/** "meaning 'shield' in Japanese)" / "written in Russian." name a language, not a country. */
+const LANGUAGE_RE =
+  /\b(in|into|from|to)(\s+)(Arabic|Chinese|Dutch|French|German|Italian|Japanese|Korean|Portuguese|Russian|Spanish|Turkish|Ukrainian|Polish|Vietnamese|Thai|Indonesian|Swedish|Norwegian|Danish|Finnish|Greek|Czech|Hungarian|Romanian|Persian|Hebrew)\b(?=\s*(?:[)\].,;:!?"'”’]|$))/g;
+
 interface Entry {
   iso: string;
   exact: string;
@@ -67,9 +88,18 @@ for (const [iso, n] of Object.entries(DISPLAY)) addName(iso, n, true);
 /** ISO 3166-1 alpha-2 codes of countries mentioned in the text (case-sensitive proper nouns). */
 export function extractCountries(text: string): string[] {
   const out = new Set<string>();
-  const tokens = tokenize(text);
+  // Language mentions are lower-cased so the case-sensitive gazetteer skips them.
+  const clean = text.replace(LANGUAGE_RE, (_m, prep: string, sp: string, lang: string) => `${prep}${sp}${lang.toLowerCase()}`);
+  // A clamped summary ending "…The Canadian…" cannot say what the word belonged to: drop the cut-off tail.
+  const tokens = tokenize(clean.replace(/\s*\S+\s*…\s*$/, ''));
   const lower = tokens.map((t) => t.toLowerCase());
-  for (let i = 0; i < tokens.length; i++) {
+  outer: for (let i = 0; i < tokens.length; i++) {
+    for (let n = Math.min(PHRASE_MAX, tokens.length - i); n >= 2; n--) {
+      if (phraseIndex.has(tokens.slice(i, i + n).join(' '))) {
+        i += n - 1;
+        continue outer;
+      }
+    }
     for (let n = Math.min(MAX_N, tokens.length - i); n >= 1; n--) {
       const e = gazetteer.get(lower.slice(i, i + n).join(' '));
       if (!e || e.exact !== tokens.slice(i, i + n).join(' ')) continue;

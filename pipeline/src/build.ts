@@ -63,11 +63,22 @@ export interface StoredItem {
 interface FeedState {
   lastOk?: string;
   consecutiveFailures: number;
+  /** Newest entry date in the feed itself (even if older than the retention window). */
+  latestEntry?: string;
+  /** `dates: first-seen` feeds: entry keys already seen (baseline + new), newest last. */
+  seen?: string[];
 }
+
+const SEEN_CAP = 500;
 
 interface RunMeta {
   stateSince: string;
+  /** Version of the feed filtering/dating rules the cached ETags were fetched under. */
+  feedLogic?: number;
 }
+
+/** Bump when title filters or entry dating change, so every feed is re-parsed once (ETags ignored). */
+const FEED_LOGIC_VERSION = 2;
 
 const TIER_RANK = { A: 0, B: 1, C: 2 } as const;
 
@@ -114,6 +125,16 @@ async function ingestFeed(
       const cutoff = ctx.now - (feed.retainDays ?? CONFIG.retentionDays) * DAY;
       let inWindow = 0;
       let known = 0;
+      const latest = entries.reduce((m, e) => {
+        const t = e.published ? Date.parse(e.published) : NaN;
+        return Number.isFinite(t) && t <= ctx.now + HOUR ? Math.max(m, t) : m;
+      }, 0);
+      if (latest) fs.latestEntry = new Date(latest).toISOString();
+      // `dates: first-seen`: the feed's dates are unreliable (e.g. Exploit-DB backdates new entries),
+      // so an entry is dated when CyberDigest first sees it. The first run only records a baseline.
+      const firstSeenMode = feed.dates === 'first-seen';
+      const baseline = firstSeenMode && !fs.seen;
+      const seen = new Set(fs.seen ?? []);
       for (const e of entries) {
         const title = toPlainText(e.title);
         if (!keepTitle(feed, title)) continue;
@@ -122,6 +143,13 @@ async function ingestFeed(
         let published = e.published;
         if (published && Date.parse(published) > ctx.now + HOUR) published = null;
         const key = `${feed.id}:${shortHash(e.guid || url || title, 16)}`;
+        if (firstSeenMode) {
+          const wasSeen = seen.has(key);
+          seen.delete(key);
+          seen.add(key);
+          if (baseline || (wasSeen && !ctx.items[key])) continue;
+          published = null;
+        }
         const existing = ctx.items[key];
         if (existing) {
           known++;
@@ -156,6 +184,7 @@ async function ingestFeed(
           exploited: claimsExploited(`${title}. ${body.slice(0, 600)}`),
         };
       }
+      if (firstSeenMode) fs.seen = [...seen].slice(-SEEN_CAP);
       ctx.http[feed.id] = { etag: res.etag, lastModified: res.lastModified };
       health.possibleGap = Boolean(fs.lastOk) && inWindow >= 5 && known === 0;
       if (entries.length === 0) health.error = 'feed parsed but contains no items';
@@ -174,6 +203,7 @@ async function ingestFeed(
   }
   health.consecutiveFailures = fs.consecutiveFailures;
   health.lastOk = fs.lastOk;
+  if (fs.latestEntry) health.latestEntry = fs.latestEntry;
   return health;
 }
 
@@ -190,6 +220,10 @@ async function main(): Promise<void> {
   const items = store.readJson<Record<string, StoredItem>>('items.json', {});
   const feedState = store.readJson<Record<string, FeedState>>('feed-state.json', {});
   const runMeta = store.readJson<RunMeta>('run-meta.json', { stateSince: nowIso });
+  if (runMeta.feedLogic !== FEED_LOGIC_VERSION) {
+    for (const f of feeds) delete http[f.id];
+    runMeta.feedLogic = FEED_LOGIC_VERSION;
+  }
   const cveCache = store.readJson<Record<string, CveSummary>>('cve-cache.json', {});
   const pocCache = store.readJson<Record<string, PocSummary>>('poc-cache.json', {});
   const reg = new SourceRegistry(store.readJson<SourceInfo[]>('sources.json', []));

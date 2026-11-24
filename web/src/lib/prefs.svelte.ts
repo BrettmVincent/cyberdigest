@@ -4,7 +4,8 @@
 export type Theme = 'dark' | 'light';
 
 /** Watch/mute terms are "kind:value", e.g. "vendor:Fortinet", "actor:APT28", "cve:CVE-2026-1234", "kw:ivanti". */
-export type TermKind = 'vendor' | 'actor' | 'malware' | 'cve' | 'kw';
+import { parseTerm, term, type TermKind } from './terms';
+export { parseTerm, term, type TermKind };
 
 export type View = 'overview' | 'stories' | 'cves' | 'sources' | 'ransomware' | 'actor' | 'group';
 
@@ -59,18 +60,6 @@ export function savePrefs(): void {
   } catch {
     /* storage full or disabled: preferences just won't persist */
   }
-}
-
-export function term(kind: TermKind, value: string): string {
-  return `${kind}:${value}`;
-}
-
-export function parseTerm(t: string): { kind: TermKind; value: string } | null {
-  const i = t.indexOf(':');
-  if (i < 0) return null;
-  const kind = t.slice(0, i) as TermKind;
-  if (!['vendor', 'actor', 'malware', 'cve', 'kw'].includes(kind)) return null;
-  return { kind, value: t.slice(i + 1) };
 }
 
 export function toggleIn(list: string[], value: string): void {

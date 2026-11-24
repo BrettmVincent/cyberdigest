@@ -13,13 +13,14 @@
   --text: #f0efec;
   --text-2: #c3c2b7;
   --muted: #898781;
-  /* Brand cyan (matches the logo). --accent-ink is the accent used as text; --on-accent is text on a cyan fill. */
-  --accent: #01efe9;
-  --accent-hover: #00d4ce;
-  --accent-ink: #01efe9;
-  --accent-wash: rgba(1, 239, 233, 0.12);
+  /* Brand blue: #005baa in light mode; dark mode uses #4a95e2, the same hue lifted for contrast on black
+     (5.5:1 on cards; #005baa would be 2.6:1). --accent-ink = accent as text; --on-accent = text on a blue fill. */
+  --accent: #4a95e2;
+  --accent-hover: #5aa0e8;
+  --accent-ink: #4a95e2;
+  --accent-wash: rgba(74, 149, 226, 0.14);
   --on-accent: #0b0b0b;
-  --focus: #01efe9;
+  --focus: #4a95e2;
   --critical: #d03b3b;
   --serious: #ec835a;
   --warning: #fab219;
@@ -27,19 +28,19 @@
   --critical-wash: rgba(208, 59, 59, 0.16);
   --serious-wash: rgba(236, 131, 90, 0.14);
   --warning-wash: rgba(250, 178, 25, 0.13);
-  --new-dot: #01efe9;
-  /* Charts. Series cyan is deeper than the UI accent so it sits in the chart lightness band
-     (validated against --series-2: deutan ΔE 15.1, ≥ 3:1 on surface). */
-  --series-1: #0ca8a2;
+  --new-dot: #4a95e2;
+  /* Charts. Series blue sits in the chart lightness band
+     (validated against --series-2: protan ΔE 25.2, ≥ 3:1 on surface). */
+  --series-1: #3d8bdb;
   --series-2: #d95926;
   --grid: #2c2c2a;
   --axis: #383835;
-  /* Sequential cyan, ordinal steps for the dark surface: more = lighter (OKLab L 0.37 → 0.89). */
-  --seq-1: #0f4a48;
-  --seq-2: #0b6e6b;
-  --seq-3: #07968f;
-  --seq-4: #12c2bc;
-  --seq-5: #7ef2ee;
+  /* Sequential blue, ordinal steps for the dark surface: more = lighter (OKLab L 0.34 → 0.83). */
+  --seq-1: #123a63;
+  --seq-2: #0d4f8f;
+  --seq-3: #2a74c4;
+  --seq-4: #5aa0e8;
+  --seq-5: #a6cdf4;
   --map-empty: #262624;
   --map-stroke: #0b0b0b;
   /* P3 fill in charts: validated against status red/orange (CVD ΔE ≥ 13.9, ≥ 3:1 contrast). */
@@ -57,13 +58,13 @@
   --text: #0b0b0b;
   --text-2: #52514e;
   --muted: #6b6a65;
-  /* Teal from the light logo: fills, borders, focus (≥ 3:1). Text uses the deeper --accent-ink (5.0:1). */
-  --accent: #039694;
-  --accent-hover: #027a78;
-  --accent-ink: #027a78;
-  --accent-wash: rgba(3, 150, 148, 0.1);
-  --on-accent: #0b0b0b;
-  --focus: #039694;
+  /* Brand blue #005baa (matches the logo): 6.5:1 as text on the page; white text on it is 6.8:1. */
+  --accent: #005baa;
+  --accent-hover: #004a8c;
+  --accent-ink: #005baa;
+  --accent-wash: rgba(0, 91, 170, 0.1);
+  --on-accent: #ffffff;
+  --focus: #005baa;
   --critical: #d03b3b;
   --serious: #ec835a;
   --warning: #fab219;
@@ -71,17 +72,18 @@
   --critical-wash: rgba(208, 59, 59, 0.1);
   --serious-wash: rgba(236, 131, 90, 0.14);
   --warning-wash: rgba(250, 178, 25, 0.16);
-  --new-dot: #039694;
-  --series-1: #039694;
+  --new-dot: #005baa;
+  /* Validated against --series-2: protan ΔE 24.6, ≥ 3:1 on surface. */
+  --series-1: #005baa;
   --series-2: #eb6834;
   --grid: #e1e0d9;
   --axis: #c3c2b7;
-  /* Sequential cyan, ordinal steps for the light surface: more = darker (OKLab L 0.85 → 0.33). */
-  --seq-1: #8fe0dc;
-  --seq-2: #45c0bb;
-  --seq-3: #039694;
-  --seq-4: #026b69;
-  --seq-5: #013e3d;
+  /* Sequential blue, ordinal steps for the light surface: more = darker (OKLab L 0.82 → 0.33). */
+  --seq-1: #a9c9ec;
+  --seq-2: #6fa3dc;
+  --seq-3: #2f7fd0;
+  --seq-4: #005baa;
+  --seq-5: #003566;
   --map-empty: #ecebe6;
   --map-stroke: #fcfcfb;
   /* Below 3:1 on light: the chart ships a legend, tooltips and a table view as relief. */

@@ -179,6 +179,20 @@ async function ransomwareLive(u: Upstream, reg: SourceRegistry, resolver: GroupR
   }
 }
 
+/** Sports/IOC-style codes Cyberwatch sometimes uses instead of ISO 3166 alpha-3. */
+const IOC_TO_ISO2: Record<string, string> = {
+  SLO: 'SI', GER: 'DE', NED: 'NL', SUI: 'CH', POR: 'PT', DEN: 'DK', CRO: 'HR', GRE: 'GR', BUL: 'BG', RSA: 'ZA', UAE: 'AE', KSA: 'SA',
+  CHI: 'CL', MAS: 'MY', INA: 'ID', PHI: 'PH', VIE: 'VN', LAT: 'LV', IRI: 'IR', ALG: 'DZ', NGR: 'NG', ANG: 'AO', ZIM: 'ZW', TAN: 'TZ', URU: 'UY', PAR: 'PY',
+};
+
+/** Cyberwatch country field → ISO alpha-2 (alpha-3, alpha-2, or IOC code); null when unrecognisable. */
+export function cyberwatchCountry(raw: string): string | null {
+  const c = raw.trim().toUpperCase();
+  if (/^[A-Z]{3}$/.test(c)) return countries.alpha3ToAlpha2(c) ?? IOC_TO_ISO2[c] ?? null;
+  if (/^[A-Z]{2}$/.test(c) && countries.isValid(c)) return c;
+  return null;
+}
+
 /** Cyberwatch (CC BY-NC): publicly reported cyberattacks → counts per country per day. */
 async function cyberwatch(u: Upstream, reg: SourceRegistry): Promise<DailyCounts> {
   const file = 'ransomware/cyberwatch.json';
@@ -198,16 +212,17 @@ async function cyberwatch(u: Upstream, reg: SourceRegistry): Promise<DailyCounts
     const list = JSON.parse(res.text!) as { date?: string; country?: string }[];
     const days: DailyCounts = {};
     const from = isoDay(u.now - 90 * DAY);
+    let unmapped = 0;
     for (const r of list) {
       const date = (r.date ?? '').slice(0, 10);
       if (date < from) continue;
-      const c = (r.country ?? '').toUpperCase();
-      const iso2 = c.length === 3 ? countries.alpha3ToAlpha2(c) : /^[A-Z]{2}$/.test(c) ? c : undefined;
+      const iso2 = cyberwatchCountry(r.country ?? '');
       if (iso2) bump(days, date, iso2);
+      else unmapped++;
     }
     u.store.writeJson(file, days);
     markRan(u, 'cyberwatch');
-    reg.set('cyberwatch', { status: 'ok', detail: `${list.length} reported attacks scanned; per-country counts kept`, retrieved: true });
+    reg.set('cyberwatch', { status: 'ok', detail: `${list.length} reported attacks scanned; per-country counts kept${unmapped ? `; ${unmapped} in 90 days without a recognisable country` : ''}`, retrieved: true });
     return days;
   } catch (e) {
     delete u.http[rawUrl('Casualtek/Cyberwatch', 'cyberattacks.json')];

@@ -75,7 +75,18 @@
 
   const unmuted = $derived((data?.stories ?? []).filter((s) => !isMuted(s)));
   const mutedCount = $derived((data?.stories.length ?? 0) - unmuted.length);
-  const ctx = $derived({ now, cveInfo, actors, isWatched, isStarred, isNew });
+  // Country names → ISO, from the names the pipeline already ships (map stats + actor targets).
+  const countryByName = $derived.by(() => {
+    const m = new Map<string, string>();
+    for (const c of data?.overview.countries ?? []) m.set(c.name.toLowerCase(), c.iso);
+    for (const a of data?.actors ?? []) {
+      if (a.country && a.countryName) m.set(a.countryName.toLowerCase(), a.country);
+      for (const t of a.targets) m.set(t.name.toLowerCase(), t.iso);
+    }
+    return m;
+  });
+  const countryIso = (v: string) => countryByName.get(v.toLowerCase()) ?? null;
+  const ctx = $derived({ now, cveInfo, actors, isWatched, isStarred, isNew, countryIso });
   const matched = $derived(unmuted.filter((s) => matchStory(s, parsed, ctx)));
   const grouped = $derived(prefs.grouped);
   const articleCount = (s: Story) => s.sources.length + 1;

@@ -61,7 +61,9 @@ export const CONFIG = {
     dictMaxAgeDays: 7,
   },
 
-  /** Titles matching this are dropped from tier B/C feeds (vendor marketing). */
+  /** Headlines matching this are never dropped as marketing ("Git security vulnerabilities announced"). */
+  securitySignal: /\b(vulnerabilit(y|ies)|CVE-\d{4}|zero-day|0-day|exploit(ed|s|ation)?|ransomware|breach(ed|es)?|malware|backdoor(s|ed)?)\b/i,
+  /** Titles matching this are dropped from tier B/C feeds (vendor marketing), unless securitySignal matches. */
   marketingExclude:
     /\b(webinar|press release|launch(es|ed)?|announc(es|ed|ing)|award(s|ed)?|recogni[sz]ed|named a leader|gartner|forrester|idc marketscape|customer stor(y|ies)|partner(s|ship)|now available|introducing|join us|register now|event recap|podcast|hiring|careers|black friday|cyber monday|year in review|trust center|product update|release notes|what'?s new in)\b/i,
 
