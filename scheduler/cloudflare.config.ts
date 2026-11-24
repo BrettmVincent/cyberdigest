@@ -9,6 +9,8 @@ export default defineConfig({
 		// No public URL: this Worker only runs on its Cron Trigger.
 		workersDev: false,
 		previewUrls: false,
+		// Keep invocation logs (free plan includes Workers Logs) so failed dispatches are visible.
+		observability: { enabled: true, logs: { enabled: true, invocationLogs: true } },
 		// Every 10 minutes (UTC).
 		triggers: [triggers.scheduled({ schedule: "*/10 * * * *" })],
 		env: {
