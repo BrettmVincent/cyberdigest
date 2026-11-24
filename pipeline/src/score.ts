@@ -6,6 +6,8 @@ export interface ScoreItem {
   feedId: string;
   tier: SourceTier;
   firehose: boolean;
+  /** Item from an all-CVE aggregator feed: never corroborates (multi-source, exploitation claims). */
+  aggregator?: boolean;
   time: number;
   exploited: boolean;
   cves: string[];
@@ -107,7 +109,7 @@ export function scoreStory(items: ScoreItem[], cveInfo: (id: string) => CveInfo 
     const recent = now - Date.parse(c.kev.dateAdded) <= rules.kevRecentForHighDays * DAY;
     add({ code: 'kev', label: recent ? 'KEV' : `KEV (${c.kev.dateAdded.slice(0, 4)})`, cve: c.id }, recent ? 2 : 3);
   }
-  if (items.some((i) => i.tier !== 'A' && i.exploited)) add({ code: 'exploited-claim', label: 'Exploitation reported' }, 2);
+  if (items.some((i) => i.tier !== 'A' && i.exploited && !i.aggregator)) add({ code: 'exploited-claim', label: 'Exploitation reported' }, 2);
 
   // EPSS-high only for CVEs from the last year: old, well-known CVEs score high forever.
   const byEpss = [...infos].filter((c) => c.epss !== null && cveAgeDays(c, now) <= 365).sort((a, b) => b.epss! - a.epss!);
@@ -121,8 +123,9 @@ export function scoreStory(items: ScoreItem[], cveInfo: (id: string) => CveInfo 
   );
   if (poc) add({ code: 'poc-new', label: 'New public PoC', cve: poc.id }, 2);
 
-  const first = Math.min(...items.map((i) => i.time));
-  const early = new Set(items.filter((i) => i.time - first <= rules.multiSourceWindowHours * HOUR).map((i) => i.feedId));
+  const independent = items.filter((i) => !i.aggregator);
+  const first = Math.min(...independent.map((i) => i.time));
+  const early = new Set(independent.filter((i) => i.time - first <= rules.multiSourceWindowHours * HOUR).map((i) => i.feedId));
   if (early.size >= rules.multiSourceCount) add({ code: 'multi-source', label: `${early.size} sources in 24h` }, 2);
 
   // ── P3: monitor ──

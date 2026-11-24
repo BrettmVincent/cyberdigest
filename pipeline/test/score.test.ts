@@ -88,6 +88,17 @@ describe('scoreStory', () => {
     expect(r.reasons[0]!.label).toBe('3 sources in 24h');
   });
 
+  it('aggregator feeds (every CVE re-published) never corroborate', () => {
+    const two = ['a', 'b'].map((f, i) => it_({ feedId: f, time: NOW - DAY + i * 3_600_000 }));
+    const agg = it_({ feedId: 'cve-now', aggregator: true, firehose: true, exploited: true, time: NOW - DAY + 2 * 3_600_000 });
+    const r = scoreStory([...two, agg], lookup([]), NOW);
+    expect(r.priority).toBe(4);
+    expect(r.reasons.map((x) => x.code)).not.toContain('multi-source');
+    expect(r.reasons.map((x) => x.code)).not.toContain('exploited-claim');
+    // An aggregator-only story with no other evidence stays P4.
+    expect(scoreStory([agg], lookup([]), NOW).priority).toBe(4);
+  });
+
   it('P3 for advisories and for research naming a CVE or threat; firehose advisories stay P4', () => {
     expect(scoreStory([it_({ tier: 'A' })], lookup([]), NOW).priority).toBe(3);
     expect(scoreStory([it_({ tier: 'B', hasThreatEntity: true })], lookup([]), NOW).priority).toBe(3);

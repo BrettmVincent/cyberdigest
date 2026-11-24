@@ -111,7 +111,7 @@ async function ingestFeed(
   if (res.status === 'ok' && res.data) {
     try {
       const entries = parseFeed(decodeText(res.data, res.contentType));
-      const cutoff = ctx.now - CONFIG.retentionDays * DAY;
+      const cutoff = ctx.now - (feed.retainDays ?? CONFIG.retentionDays) * DAY;
       let inWindow = 0;
       let known = 0;
       for (const e of entries) {
@@ -249,8 +249,12 @@ async function main(): Promise<void> {
   // 4. Retention.
   const cutoff = now - CONFIG.retentionDays * DAY;
   for (const [k, it] of Object.entries(items)) {
-    if (itemTime(it) < cutoff || !feedById.get(it.feedId)?.enabled) delete items[k];
+    const f = feedById.get(it.feedId);
+    if (!f?.enabled || itemTime(it) < (f.retainDays ? now - f.retainDays * DAY : cutoff)) delete items[k];
   }
+  // Aggregator feeds (every CVE, re-published) never count as independent coverage.
+  const isAggregator = (feedId: string) => feedById.get(feedId)?.aggregator === true;
+  const independentFeeds = (its: StoredItem[]) => new Set(its.filter((i) => !isAggregator(i.feedId)).map((i) => i.feedId)).size;
   const all = Object.values(items);
   for (const h of feedHealth) {
     h.itemsPerWeek = all.filter((i) => i.feedId === h.id && itemTime(i) >= now - 7 * DAY).length;
@@ -380,6 +384,7 @@ async function main(): Promise<void> {
         feedId: m.feedId,
         tier: f.tier,
         firehose: f.firehose,
+        aggregator: f.aggregator,
         time: itemTime(m),
         exploited: m.exploited,
         cves: m.cves,
@@ -419,7 +424,7 @@ async function main(): Promise<void> {
       priority,
       reasons,
       sources,
-      sourceCount: new Set(members.map((m) => m.feedId)).size,
+      sourceCount: Math.max(1, independentFeeds(members)),
       // CVEs: all of them (the copy-list needs every ID), headline/focal ones first, then newest.
       cves: [...new Set([...extractCves(lead.title), ...members.flatMap((m) => extractCves(m.title)), ...members.flatMap((m) => m.cves).sort((a, b) => b.localeCompare(a, 'en', { numeric: true }))])],
       vendors: union((m) => m.vendors),
@@ -470,7 +475,7 @@ async function main(): Promise<void> {
     cves.push({
       ...base,
       stories: storiesByCve.get(id) ?? [],
-      sources: new Set(its.map((i) => i.feedId)).size,
+      sources: independentFeeds(its),
       firstSeen: new Date(Math.min(...times)).toISOString(),
       lastSeen: new Date(Math.max(...times)).toISOString(),
     });

@@ -11,6 +11,10 @@ export interface FeedConfig {
   group: FeedGroup;
   enabled: boolean;
   firehose: boolean;
+  /** Re-publishes every CVE record (not independent coverage): never counts as a corroborating source. */
+  aggregator: boolean;
+  /** Keep this feed's items for fewer days than CONFIG.retentionDays (high-volume streams). */
+  retainDays?: number;
   include?: RegExp;
   exclude?: RegExp;
   marketing: boolean;
@@ -38,6 +42,8 @@ export function loadFeeds(path: string = CONFIG.paths.feeds): FeedConfig[] {
     if (!GROUPS.has(group)) throw new Error(`${where} (${id}): unknown group "${group}"`);
     const url = String(f.url ?? '');
     if (!/^https?:\/\//.test(url)) throw new Error(`${where} (${id}): url must be http(s)`);
+    const retainDays = f.retainDays === undefined ? undefined : Number(f.retainDays);
+    if (retainDays !== undefined && !(retainDays >= 1 && retainDays <= CONFIG.retentionDays)) throw new Error(`${where} (${id}): retainDays must be 1–${CONFIG.retentionDays}`);
     return {
       id,
       name: String(f.name ?? id),
@@ -46,6 +52,8 @@ export function loadFeeds(path: string = CONFIG.paths.feeds): FeedConfig[] {
       group: group as FeedGroup,
       enabled: f.enabled !== false,
       firehose: f.firehose === true,
+      aggregator: f.aggregator === true,
+      ...(retainDays !== undefined ? { retainDays } : {}),
       include: f.include ? new RegExp(String(f.include), 'i') : undefined,
       exclude: f.exclude ? new RegExp(String(f.exclude), 'i') : undefined,
       marketing: f.marketing === undefined ? tier !== 'A' : f.marketing === true,

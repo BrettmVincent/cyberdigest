@@ -127,6 +127,8 @@ Edit [`config/feeds.yaml`](../config/feeds.yaml). Each feed has a tier (A adviso
 
 - `include` / `exclude` title regexes
 - `firehose: true` for bulk advisory streams
+- `aggregator: true` for feeds that re-publish every CVE (e.g. cve.now): they never count towards "N sources in 24h", "Exploitation reported" or source counts
+- `retainDays: N` to keep a high-volume feed's items for fewer than the default 30 days
 - `marketing: false` to disable the vendor-marketing title filter
 - custom `headers`
 

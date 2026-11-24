@@ -65,6 +65,9 @@ feeds:
   - { id: certcc, name: CERT/CC Vulnerability Notes, url: "https://kb.cert.org/vuls/atomfeed/", tier: A, group: vuln }
   - { id: vulncheck, name: VulnCheck, url: "https://www.vulncheck.com/feed/blog/atom.xml", tier: B, group: vuln }
   - { id: wordfence, name: Wordfence (WordPress vulnerabilities), url: "https://www.wordfence.com/feed/", tier: B, group: vuln }
+  # Every new CVE (~480/day) with AI-written plain-language summaries (Sazabi). Aggregator: never counts
+  # as corroborating coverage; kept 3 days; P4 unless the CVE's own evidence (KEV, EPSS, PoC…) raises it.
+  - { id: cve-now, name: cve.now (all new CVEs), url: "https://cve.now/feed", tier: C, group: vuln, firehose: true, aggregator: true, retainDays: 3, marketing: false }
   - { id: watchtowr, name: watchTowr Labs, url: "https://labs.watchtowr.com/rss/", tier: B, group: vuln }
   - { id: horizon3, name: Horizon3.ai, url: "https://horizon3.ai/feed/", tier: B, group: vuln }
   - { id: slcyber, name: Searchlight Cyber Research, url: "https://www.slcyber.io/research/rss.xml", tier: B, group: vuln }
