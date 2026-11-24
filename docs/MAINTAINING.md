@@ -2,7 +2,7 @@
 
 Full detail for whoever maintains this deployment (or forks it). Visitors only need the [hosted dashboard](https://brettmvincent.github.io/cyberdigest/).
 
-CyberDigest pulls ~100 curated feeds (CERTs, vendor PSIRTs, threat research, a few news outlets) plus CISA KEV, FIRST EPSS, CVE records and public-PoC data. It folds duplicate coverage into single stories and ranks them with transparent rules. Each story shows **why** it ranks where it does. It runs entirely on GitHub: Actions refreshes the data every 15 minutes and Pages serves the dashboard. No servers, no API keys, no LLM.
+CyberDigest pulls ~100 curated feeds (CERTs, vendor PSIRTs, threat research, a few news outlets) plus CISA KEV, FIRST EPSS, CVE records and public-PoC data. It folds duplicate coverage into single stories and ranks them with transparent rules. Each story shows **why** it ranks where it does. It runs on GitHub: Actions refreshes the data every 10 minutes and Pages serves the dashboard. A tiny Cloudflare Worker (free plan) does the scheduling, because GitHub's own cron is unreliable. No servers, no required API keys, no LLM.
 
 ## What you get
 
@@ -57,7 +57,8 @@ All thresholds live in [`pipeline/src/config.ts`](../pipeline/src/config.ts).
 ## How it works
 
 ```
-GitHub Actions (every 15 min, off-peak minutes)
+Cloudflare Worker cron (every 10 min) → workflow_dispatch → GitHub Actions
+  (GitHub's own cron at :41 each hour is a backup only)
   ├─ restore state from the `data` branch (seen items, ETags, EPSS snapshot, caches)
   ├─ fetch feeds (conditional GET, honest bot User-Agent, 20s timeout)
   ├─ strip all HTML → plain text; extract CVEs, vendors, actors, malware
@@ -69,7 +70,13 @@ GitHub Actions (every 15 min, off-peak minutes)
 ```
 
 - **State** lives on the orphan `data` branch as a single commit, so the repo never grows. Each push also keeps the scheduled workflow from being auto-disabled after 60 days.
-- **Freshness:** expect data 15–40 minutes behind real time, because of the cron interval, Actions scheduling delays and the 10-minute Pages CDN cache. The header always shows "Updated N min ago". It turns amber after 45 minutes and red after 90.
+- **Scheduler:** GitHub's `schedule` trigger is best-effort. New repositories can wait many hours for the first run, and later runs are often delayed or dropped. So [`scheduler/`](../scheduler) holds a Cloudflare Worker whose Cron Trigger calls the GitHub `workflow_dispatch` API every 10 minutes.
+  - It has no public URL.
+  - It uses a fine-grained token limited to this repo, with **Actions: Read and write** only.
+  - Set or rotate the token with `pwsh -File scheduler/set-token.ps1`, which checks the token and redeploys.
+  - Watch it with `npx wrangler tail cyberdigest-scheduler`.
+  - If the token expires, runs fall back to the hourly GitHub cron.
+- **Freshness:** expect data 10–30 minutes behind real time, because of the trigger interval, the run time (about 2–3 min) and the 10-minute Pages CDN cache. The header always shows "Updated N min ago". It turns amber after 45 minutes and red after 90.
 - **Entity dictionary:** rebuilt weekly from the MISP galaxy (threat actors, ransomware, Malpedia, MITRE ATT&CK groups and software) plus CISA KEV vendor names and a product→vendor alias map in [`pipeline/src/dicts.ts`](../pipeline/src/dicts.ts).
 
 ## Maintainers only: running a copy

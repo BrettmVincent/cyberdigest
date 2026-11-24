@@ -6,7 +6,7 @@
 </p>
 
 <h3 align="center"><a href="https://brettmvincent.github.io/cyberdigest/">▶ Open the dashboard</a></h3>
-<p align="center">Free · nothing to install · updates every 15 minutes</p>
+<p align="center">Free · nothing to install · updates every 10 minutes</p>
 
 ---
 

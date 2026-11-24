@@ -1,14 +1,16 @@
 name: Update CyberDigest
 
 # Fetch feeds + enrichment, rebuild the dashboard, deploy to GitHub Pages.
-# Off-peak minutes avoid the top-of-hour scheduling backlog on GitHub Actions.
+# The main trigger is workflow_dispatch, every 10 minutes, from the Cloudflare Worker in scheduler/.
+# GitHub's own cron is best-effort (often hours late on new repos), so it is kept only as an
+# hourly backup at an off-peak minute.
 on:
   schedule:
-    - cron: '7,22,37,52 * * * *'
+    - cron: '41 * * * *'
   workflow_dispatch:
   push:
     branches: [main]
-    paths-ignore: ['**.md', 'LICENSE', '.github/dependabot.yml']
+    paths-ignore: ['**.md', 'LICENSE', '.github/dependabot.yml', 'scheduler/**']
 
 permissions: {}
 

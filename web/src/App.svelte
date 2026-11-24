@@ -518,7 +518,7 @@
 
     <div class="status">
       {#if data}
-        <span class="fresh {freshness}" title="Data generated {fmtDateTime(data.meta.generatedAt)}. Refreshes every ~15 min; this page checks every 5 min.">
+        <span class="fresh {freshness}" title="Data generated {fmtDateTime(data.meta.generatedAt)}. Refreshes every ~10 min; this page checks every 5 min.">
           <span class="dot" aria-hidden="true"></span>
           {freshness === 'fresh' ? 'Updated' : freshness === 'stale' ? 'Stale: updated' : 'Very stale: updated'}
           {ago(data.meta.generatedAt, now)} ago
