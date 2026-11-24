@@ -72,7 +72,7 @@
   }
   .line {
     fill: none;
-    stroke: var(--accent);
+    stroke: var(--series-1);
     stroke-width: 2;
     stroke-linejoin: round;
     stroke-linecap: round;
@@ -87,7 +87,7 @@
     stroke-width: 1;
   }
   .dot {
-    fill: var(--accent);
+    fill: var(--series-1);
     stroke: var(--surface);
     stroke-width: 2;
   }

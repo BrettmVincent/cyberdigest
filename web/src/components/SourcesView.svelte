@@ -122,6 +122,6 @@
     max-width: 260px;
   }
   td a {
-    color: var(--accent);
+    color: var(--accent-ink);
   }
 </style>

@@ -198,7 +198,7 @@
     transform: translateY(-1px);
   }
   .star {
-    color: var(--accent);
+    color: var(--accent-ink);
     font-size: 12px;
   }
   .meta {

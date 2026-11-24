@@ -42,9 +42,17 @@
     text-align: left;
     min-width: 0;
   }
+  .tile.clickable {
+    transition: border-color 120ms ease-out, background-color 120ms ease-out;
+  }
   .tile.clickable:hover {
-    border-color: var(--border-strong);
-    background: var(--surface-2);
+    border-color: var(--accent);
+    background: var(--accent-wash);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tile.clickable {
+      transition: none;
+    }
   }
   .label {
     font-size: 11.5px;
@@ -58,7 +66,8 @@
     font-weight: 650;
     line-height: 1.15;
     color: var(--text);
-    font-variant-numeric: normal;
+    /* Tabular digits keep the count-up animation from jittering sideways. */
+    font-variant-numeric: tabular-nums;
   }
   .delta {
     font-size: 12px;

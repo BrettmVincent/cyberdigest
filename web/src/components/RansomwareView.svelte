@@ -234,7 +234,7 @@
   }
   .credit a,
   .link {
-    color: var(--accent);
+    color: var(--accent-ink);
     font: inherit;
   }
   .link:hover {

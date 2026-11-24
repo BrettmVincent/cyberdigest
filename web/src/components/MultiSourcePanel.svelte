@@ -72,7 +72,7 @@
     fill: var(--surface-3);
   }
   .bar .fill {
-    fill: var(--accent);
+    fill: var(--series-1);
   }
   .l2 {
     color: var(--muted);

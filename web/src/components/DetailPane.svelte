@@ -339,7 +339,7 @@
     gap: 12px;
     margin-top: 4px;
     font-size: 11.5px;
-    color: var(--accent);
+    color: var(--accent-ink);
   }
   .sources li {
     display: grid;

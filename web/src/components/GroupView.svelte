@@ -190,7 +190,7 @@
   .credit a,
   td a,
   .links a {
-    color: var(--accent);
+    color: var(--accent-ink);
   }
   .counts {
     display: grid;

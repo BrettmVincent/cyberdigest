@@ -715,6 +715,14 @@
     height: 31px;
     width: auto;
   }
+  .brand:hover .logo {
+    filter: drop-shadow(0 0 6px var(--accent-wash)) drop-shadow(0 0 2px var(--accent-wash));
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .logo {
+      transition: filter 150ms ease-out;
+    }
+  }
   /* Show the colourway that matches the active theme (dark is the default). */
   .logo-on-light {
     display: none;
@@ -736,11 +744,19 @@
     font-weight: 500;
   }
   .views button:hover {
-    color: var(--text);
+    color: var(--accent-ink);
   }
   .views button[aria-current='page'] {
-    background: var(--surface-3);
-    color: var(--text);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+  }
+  .views button[aria-current='page']:hover {
+    background: var(--accent-hover);
+    color: var(--on-accent);
+  }
+  .views button[aria-current='page']:focus-visible {
+    outline-color: var(--text);
   }
   .search {
     position: relative;
@@ -758,6 +774,7 @@
   .search input:focus {
     outline: 2px solid var(--focus);
     outline-offset: -1px;
+    border-color: var(--accent);
   }
   .search-kbd {
     position: absolute;

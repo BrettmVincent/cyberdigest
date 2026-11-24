@@ -88,7 +88,7 @@
   }
   .text a,
   .link {
-    color: var(--accent);
+    color: var(--accent-ink);
   }
   .link {
     font: inherit;
