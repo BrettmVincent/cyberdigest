@@ -95,10 +95,10 @@
   );
   const visible = $derived.by(() => {
     const list = parsed.priority.length ? matched : matched.filter((s) => bands.includes(s.priority));
-    // Stable: pipeline order within a band, but watched/starred stories float to the top of their band.
+    // Newest first regardless of priority: a story's latest article time; priority breaks ties.
     return list
-      .map((s, i) => ({ s, i, w: isWatched(s) || isStarred(s) ? 0 : 1 }))
-      .sort((a, b) => a.s.priority - b.s.priority || a.w - b.w || a.i - b.i)
+      .map((s, i) => ({ s, i }))
+      .sort((a, b) => b.s.lastSeen.localeCompare(a.s.lastSeen) || a.s.priority - b.s.priority || a.i - b.i)
       .map((x) => x.s);
   });
   const rows = $derived<ListRow[]>(grouped ? groupedRows(visible) : articleRows(visible));

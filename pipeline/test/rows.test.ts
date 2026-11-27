@@ -46,13 +46,13 @@ describe('list rows (deduplication toggle)', () => {
     ]);
   });
 
-  it('every article: one row per article, newest first within each priority band', () => {
+  it('every article: one row per article, newest first regardless of priority', () => {
     const rows = articleRows(stories);
     expect(rows.map((r) => [r.key, r.title, r.feed])).toEqual([
+      ['b~0', 'b lead', 'Lead feed'],
       ['a~1', 'a dup 1', 'News1'],
       ['a~0', 'a lead', 'Lead feed'],
       ['a~2', 'a dup 2', 'News2'],
-      ['b~0', 'b lead', 'Lead feed'],
     ]);
     expect(rows.every((r) => storyIdOf(r.key) === r.story.id)).toBe(true);
   });

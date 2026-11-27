@@ -29,7 +29,7 @@ export function groupedRows(stories: Story[]): ListRow[] {
   }));
 }
 
-/** Every article as its own row; kept within the story's priority band, newest article first. */
+/** Every article as its own row, newest article first regardless of priority. */
 export function articleRows(stories: Story[]): ListRow[] {
   const rows: ListRow[] = [];
   for (const s of stories) {
@@ -42,8 +42,8 @@ export function articleRows(stories: Story[]): ListRow[] {
   const order = new Map(stories.map((s, i) => [s.id, i]));
   return rows.sort(
     (a, b) =>
-      a.story.priority - b.story.priority ||
       b.date.localeCompare(a.date) ||
+      a.story.priority - b.story.priority ||
       order.get(a.story.id)! - order.get(b.story.id)! ||
       a.index - b.index,
   );
