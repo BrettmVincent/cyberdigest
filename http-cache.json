@@ -1,0 +1,339 @@
+{
+  "kev": {
+    "etag": "\"1d0d56-66145df9db3e0\"",
+    "lastModified": "Fri, 27 Nov 2026 18:03:12 GMT"
+  },
+  "https://raw.githubusercontent.com/BushidoUK/Ransomware-Vulnerability-Matrix/HEAD/Vulnerabilities/Applications.md": {
+    "etag": "W/\"950f1fb7ab033c15bac71cfdf1e2f35e713d016b4e1c757d118abaa2e9cc2daf\""
+  },
+  "https://raw.githubusercontent.com/BushidoUK/Ransomware-Tool-Matrix/HEAD/Tools/RMM-Tools.md": {
+    "etag": "W/\"4cf4ef892500e74fa0d43d4a83d7e904fa3b954c00f65ccc79293ff4d615812e\""
+  },
+  "https://raw.githubusercontent.com/BushidoUK/Ransomware-Vulnerability-Matrix/HEAD/Vulnerabilities/Drivers.md": {
+    "etag": "W/\"3ea6697336ef2f8f2f028b82196a7bb705334d26db44f639b3682d28b389e225\""
+  },
+  "https://raw.githubusercontent.com/BushidoUK/Ransomware-Tool-Matrix/HEAD/Tools/Exfiltration.md": {
+    "etag": "W/\"eebea3addf0bfd6f211d4f33950df2ae88bb9a5b653f3ea565a6cc8d63640079\""
+  },
+  "https://raw.githubusercontent.com/BushidoUK/Ransomware-Vulnerability-Matrix/HEAD/Vulnerabilities/FileTransferServers.md": {
+    "etag": "W/\"20c5563cbfd81f203e00c25960a7f3e087f2fd4377971c04ad3a9161a6f72629\""
+  },
+  "https://raw.githubusercontent.com/BushidoUK/Ransomware-Tool-Matrix/HEAD/Tools/CredentialTheft.md": {
+    "etag": "W/\"f0d4048a039508ec34c84e4dbb529b173a5c74a92640c763164220645db950ec\""
+  },
+  "https://raw.githubusercontent.com/BushidoUK/Ransomware-Tool-Matrix/HEAD/Tools/DefenseEvasion.md": {
+    "etag": "W/\"32f944f47ce8751810345c389611ff1b797990d48ab204d62bd68bebf5c1b8ae\""
+  },
+  "https://raw.githubusercontent.com/BushidoUK/Ransomware-Vulnerability-Matrix/HEAD/Vulnerabilities/Linux.md": {
+    "etag": "W/\"a3c8bafb9417ba035b56e00bed0fcfd4d1086eb64f2559d0340ce3a2747b4187\""
+  },
+  "https://raw.githubusercontent.com/BushidoUK/Ransomware-Tool-Matrix/HEAD/Tools/DiscoveryEnum.md": {
+    "etag": "W/\"2c5952f0cf0735cb32b52b62d0ade8cf7b6e0a269803a94b290fee097ac4a945\""
+  },
+  "https://raw.githubusercontent.com/BushidoUK/Ransomware-Vulnerability-Matrix/HEAD/Vulnerabilities/Microsoft.md": {
+    "etag": "W/\"c266699fc76029fec92aa2633f6c5931b44ea52d133bd63b6a0dd8bf12bc47fb\""
+  },
+  "https://raw.githubusercontent.com/BushidoUK/Ransomware-Tool-Matrix/HEAD/Tools/Networking.md": {
+    "etag": "W/\"9f3a7a68d42aeb9dd28d3a0f57ede90d96ad85bc99e37369f817a9643feb3709\""
+  },
+  "https://raw.githubusercontent.com/BushidoUK/Ransomware-Vulnerability-Matrix/HEAD/Vulnerabilities/NetworkEdge.md": {
+    "etag": "W/\"8207cdafa3622f6609908839430369b2a138965d64b5ceabb8349e8c6246a3f9\""
+  },
+  "https://raw.githubusercontent.com/BushidoUK/Ransomware-Tool-Matrix/HEAD/Tools/Offsec.md": {
+    "etag": "W/\"7fee541f3e8b85d794955c2721e3edf06595266d8e5a005a05e2f8f413daa447\""
+  },
+  "https://raw.githubusercontent.com/BushidoUK/Ransomware-Vulnerability-Matrix/HEAD/Vulnerabilities/RMM_Tools.md": {
+    "etag": "W/\"4f8e411e376c081cd3bc59097a13c23ae329b5cf707cd90483a84310228d88e0\""
+  },
+  "https://raw.githubusercontent.com/BushidoUK/Ransomware-Tool-Matrix/HEAD/Tools/LOLBAS.md": {
+    "etag": "W/\"2277ef3927da99cab34d5fa3ab4b6210e33af89ee0599922d0955f0c6d738158\""
+  },
+  "https://raw.githubusercontent.com/BushidoUK/Ransomware-Vulnerability-Matrix/HEAD/Vulnerabilities/Virtualization.md": {
+    "etag": "W/\"bc232e42a80f1547499d85c9096f5d5b05fa9ef911b536435cd2466661e2e3a0\""
+  },
+  "epss": {
+    "etag": "\"3345f12066a287ee7a6d66e905d6388b\"",
+    "lastModified": "Sat, 28 Nov 2026 13:30:35 GMT"
+  },
+  "https://raw.githubusercontent.com/Casualtek/Cyberwatch/HEAD/cyberattacks.json": {
+    "etag": "W/\"92112eb5f56e0d5c6b48a56c6e90ee2f29131e1cfe73bc4204cf7cc14ab62fce\""
+  },
+  "unit42": {
+    "etag": "\"b8a62d2c0b5304329f6c9f5ef0cc35a6-gzip\"",
+    "lastModified": "Fri, 27 Nov 2026 17:40:52 GMT"
+  },
+  "talos": {
+    "etag": "W/\"10e793-3KozUPPBd2dKj7l5GtsMoLdQKbU\""
+  },
+  "crowdstrike": {
+    "etag": "\"14aa-661540feaada9-gzip\"",
+    "lastModified": "Sat, 28 Nov 2026 10:58:52 GMT"
+  },
+  "sentinellabs": {
+    "etag": "W/\"72450f999439151450c8a3761f81cb51\""
+  },
+  "eset": {},
+  "recordedfuture": {
+    "etag": "\"f6ce917772874ded8b8e25661add1464\"",
+    "lastModified": "Thu, 26 Nov 2026 15:55:01 GMT"
+  },
+  "sophos": {
+    "lastModified": "Sat, 28 Nov 2026 15:34:35 GMT"
+  },
+  "checkpoint": {
+    "etag": "W/\"95ca0b04d8df8c053e065e822e636559\"",
+    "lastModified": "Tue, 24 Nov 2026 14:18:14 GMT"
+  },
+  "elastic": {},
+  "huntress": {},
+  "malwarebytes": {},
+  "bitdefender": {
+    "etag": "W/\"4db8-/WR4WF22iqfccLMV22/Sv3H++qo\""
+  },
+  "rapid7": {
+    "lastModified": "Sat, 28 Nov 2026 17:18:34 GMT"
+  },
+  "coveware": {
+    "etag": "\"743db032700e6952c60e5ed6bb398f61\"",
+    "lastModified": "Wed, 28 Oct 2026 21:08:01 GMT"
+  },
+  "sophos-blog": {
+    "lastModified": "Sat, 28 Nov 2026 15:37:42 GMT"
+  },
+  "fortiguard": {
+    "etag": "\"4206c4ebe541f10cdfbeaed37a293d46\"",
+    "lastModified": "Tue, 24 Nov 2026 14:00:49 GMT"
+  },
+  "volexity": {
+    "etag": "\"4efbecf82759a0fa17f24f7c8451dad2-gzip\"",
+    "lastModified": "Fri, 20 Nov 2026 13:03:21 GMT"
+  },
+  "projectzero": {
+    "lastModified": "Wed, 25 Nov 2026 13:56:04 GMT"
+  },
+  "qualys": {
+    "etag": "W/\"38897be7177c5bc262b7a146e613ff40\"",
+    "lastModified": "Thu, 26 Nov 2026 14:53:38 GMT"
+  },
+  "tenable": {
+    "lastModified": "Sat, 28 Nov 2026 13:49:08 GMT"
+  },
+  "certcc": {
+    "lastModified": "Fri, 20 Nov 2026 15:42:38 GMT"
+  },
+  "cve-now": {
+    "etag": "W/\"W4-X8Pt41sP57fDBLgGOyQ\""
+  },
+  "vulncheck": {
+    "etag": "W/\"d9d23200b100617b88615bb1493d1ca1\""
+  },
+  "watchtowr": {
+    "etag": "W/\"80040-hA4JKk8+o2y+ZJTxhrOpAA/f8XI\""
+  },
+  "horizon3": {
+    "etag": "W/\"31987e72fdd9c45e827a0c64a10ca5a3\"",
+    "lastModified": "Thu, 26 Nov 2026 18:44:00 GMT"
+  },
+  "slcyber": {
+    "lastModified": "Sat, 28 Nov 2026 04:01:19 GMT"
+  },
+  "trailofbits": {
+    "etag": "W/\"f10fd7653fb22199a4d1e9f0c8b951c5-ssl\""
+  },
+  "portswigger": {},
+  "projectdiscovery": {},
+  "wiz": {},
+  "wordfence": {
+    "etag": "\"9b869ad81a4dd0ff56f68f331786fd1e\"",
+    "lastModified": "Wed, 25 Nov 2026 21:27:50 GMT"
+  },
+  "cisa-alerts": {},
+  "cisa-icsmed": {},
+  "cisa-ics": {},
+  "cisa-csa": {},
+  "cisa-news": {},
+  "synacktiv": {
+    "etag": "\"6b06e317-253b\"",
+    "lastModified": "Wed, 25 Nov 2026 13:31:03 GMT"
+  },
+  "bishopfox": {},
+  "ncsc-uk-reports": {
+    "etag": "W/\"1795824601\"",
+    "lastModified": "Sat, 28 Nov 2026 00:10:01 GMT"
+  },
+  "ncsc-uk-news": {
+    "etag": "W/\"1795824126\"",
+    "lastModified": "Sat, 28 Nov 2026 00:02:06 GMT"
+  },
+  "fbi-ic3": {},
+  "europol": {},
+  "cert-fr": {
+    "etag": "\"32eb47c4456ab038cfc87b4233bf684c\"",
+    "lastModified": "Fri, 27 Nov 2026 14:49:15 GMT"
+  },
+  "cert-fr-alerts": {
+    "etag": "\"273f718d6f30c30e795288e59248f8f7\"",
+    "lastModified": "Fri, 27 Nov 2026 14:46:06 GMT"
+  },
+  "cccs": {},
+  "panw-psirt": {
+    "etag": "W/\"211c-8nH48Bv/lIRL4cfFVVPukMgFDOY\""
+  },
+  "ivanti": {
+    "lastModified": "Thu, 26 Nov 2026 08:09:53 GMT"
+  },
+  "oracle-cpu": {
+    "lastModified": "Wed, 18 Nov 2026 07:00:27 GMT"
+  },
+  "google-security": {},
+  "gitlab": {
+    "etag": "W/\"b9be50a58cb6f8676e5cf6538fbbaffc\""
+  },
+  "aws-security": {
+    "lastModified": "Sat, 28 Nov 2026 01:20:22 GMT"
+  },
+  "cloudflare": {},
+  "chrome": {
+    "lastModified": "Sat, 28 Nov 2026 00:04:05 GMT"
+  },
+  "redhat": {
+    "etag": "W/\"7472d20cc2be4799584a0587c993cec7\"",
+    "lastModified": "Sat, 28 Nov 2026 14:36:08 GMT"
+  },
+  "okta": {
+    "etag": "W/\"68b60981eaa9f0593d1126a33d23db2c\"",
+    "lastModified": "Mon, 23 Nov 2026 19:58:27 GMT"
+  },
+  "github-security": {
+    "etag": "W/\"4be869134215f375cc5cdb38b1431f09\"",
+    "lastModified": "Wed, 25 Nov 2026 22:19:24 GMT"
+  },
+  "bleepingcomputer": {
+    "etag": "d734c569fc380c98060d35ff4569e2d6",
+    "lastModified": "Sat, 28 Nov 2026 17:16:10 GMT"
+  },
+  "krebs": {
+    "lastModified": "Sat, 28 Nov 2026 17:11:56 GMT"
+  },
+  "thehackernews": {
+    "lastModified": "Sat, 28 Nov 2026 16:03:41 GMT"
+  },
+  "securityweek": {
+    "etag": "W/\"75e962e085b573afec980d40d474af49\"",
+    "lastModified": "Fri, 27 Nov 2026 11:00:00 GMT"
+  },
+  "darkreading": {
+    "lastModified": "Sat, 28 Nov 2026 17:21:08 GMT"
+  },
+  "cyberscoop": {
+    "etag": "W/\"e946939f639f83421438bfeea83666a7\"",
+    "lastModified": "Wed, 25 Nov 2026 14:42:39 GMT"
+  },
+  "cyberscoop-ransomware": {
+    "etag": "W/\"e946939f639f83421438bfeea83666a7\"",
+    "lastModified": "Wed, 25 Nov 2026 14:42:39 GMT"
+  },
+  "therecord": {},
+  "cert-eu": {},
+  "cybersecurity-dive": {
+    "lastModified": "Fri, 27 Nov 2026 22:06:30 GMT"
+  },
+  "risky-bulletin": {
+    "etag": "W/\"10bdf2-u6ojfwr8tX5NVFZvx6Tyanm8zMU\""
+  },
+  "helpnet-ransomware": {
+    "lastModified": "Fri, 27 Nov 2026 13:22:26 GMT"
+  },
+  "greynoise": {
+    "lastModified": "Wed, 25 Nov 2026 23:07:09 GMT"
+  },
+  "dfirreport": {
+    "etag": "\"8b0774c6b0d9403e6ef0fd339a8bab55-gzip\"",
+    "lastModified": "Mon, 28 Sep 2026 20:27:35 GMT"
+  },
+  "za-techcentral": {},
+  "bhis": {
+    "lastModified": "Wed, 18 Nov 2026 21:57:58 GMT"
+  },
+  "trustedsec": {},
+  "censys": {
+    "etag": "\"5a675f1af2f752c3a26e4ff54ce00be9\"",
+    "lastModified": "Mon, 23 Nov 2026 20:10:40 GMT"
+  },
+  "specterops": {
+    "etag": "W/\"bf2902f9c5bddb74bfb481d40e9d2fed\"",
+    "lastModified": "Wed, 25 Nov 2026 23:26:23 GMT"
+  },
+  "fortinet-psirt": {
+    "etag": "\"6b0b0c1d-c705\"",
+    "lastModified": "Sat, 28 Nov 2026 17:15:09 GMT"
+  },
+  "cisco-psirt": {},
+  "za-itonline": {
+    "etag": "\"36aa30bd707b206623474ef0b703e7dc-gzip\"",
+    "lastModified": "Fri, 27 Nov 2026 14:27:37 GMT"
+  },
+  "infostealers": {
+    "etag": "\"6450c29ec5f0d277cbaba2ccde2d60e1-gzip\"",
+    "lastModified": "Tue, 24 Nov 2026 19:46:42 GMT"
+  },
+  "exploitdb": {
+    "lastModified": "Sat, 28 Nov 2026 17:20:03 GMT"
+  },
+  "cert-eu-ti": {},
+  "groupib": {
+    "etag": "\"bfc973d42161553c7ad097618a95c2d0-gzip\"",
+    "lastModified": "Sat, 28 Nov 2026 14:00:33 GMT"
+  },
+  "gtig": {},
+  "debian-dsa": {
+    "etag": "\"3fe4-66157ce64ec5f-gzip\"",
+    "lastModified": "Sat, 28 Nov 2026 15:26:53 GMT"
+  },
+  "ubuntu-usn": {},
+  "juniper": {},
+  "za-itweb": {},
+  "zscaler": {},
+  "proofpoint": {
+    "etag": "\"1795885339\"",
+    "lastModified": "Sat, 28 Nov 2026 17:02:19 GMT"
+  },
+  "sophos-ransomware": {},
+  "msft-ti": {
+    "etag": "\"4523f079f426d084d25a72d859a56fae-gzip\"",
+    "lastModified": "Wed, 25 Nov 2026 18:14:06 GMT"
+  },
+  "securelist": {
+    "etag": "W/\"98cbdac04ab00fbf65e337ee20c62596\"",
+    "lastModified": "Wed, 25 Nov 2026 11:58:05 GMT"
+  },
+  "msrc": {
+    "etag": "\"0x8DF4C5CDB29E6DE\"",
+    "lastModified": "Fri, 27 Nov 2026 08:03:00 GMT"
+  },
+  "arstechnica": {
+    "etag": "\"7c6540a3ae5c8a1ac91d162d03fe1929\"",
+    "lastModified": "Sat, 28 Nov 2026 17:04:39 GMT"
+  },
+  "databreaches": {
+    "etag": "W/\"f7c8bd56f9ee6c745d709c8b14bb8e37\"",
+    "lastModified": "Sat, 28 Nov 2026 13:34:43 GMT"
+  },
+  "ncsc-nl": {
+    "etag": "\"0x8DF4C6DA5BC6CEA\"",
+    "lastModified": "Fri, 27 Nov 2026 10:03:12 GMT"
+  },
+  "theregister": {},
+  "zdi-advisories": {},
+  "zdi-blog": {
+    "etag": "W/\"5748b207c66c6e55b9fa1e90dc26b798-gzip\""
+  },
+  "sans-isc": {
+    "etag": "W/\"8d04-661595f1facd9\"",
+    "lastModified": "Sat, 28 Nov 2026 17:18:56 GMT"
+  },
+  "orca": {
+    "etag": "W/\"69d18f6d1122df0e774c89664ee584ea\"",
+    "lastModified": "Thu, 26 Nov 2026 13:22:15 GMT"
+  }
+}

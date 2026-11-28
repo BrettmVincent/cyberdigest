@@ -1,0 +1,568 @@
+{
+  "talos": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-25T19:00:00.000Z"
+  },
+  "unit42": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-25T15:00:09.000Z"
+  },
+  "msft-ti": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-25T18:09:06.000Z"
+  },
+  "gtig": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-19T14:00:00.000Z"
+  },
+  "crowdstrike": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-25T08:00:00.000Z"
+  },
+  "securelist": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-25T09:00:35.000Z"
+  },
+  "sentinellabs": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-18T14:00:00.000Z"
+  },
+  "eset": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-19T08:00:00.000Z"
+  },
+  "recordedfuture": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-26T00:00:00.000Z"
+  },
+  "elastic": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-23T12:34:52.000Z"
+  },
+  "huntress": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-25T08:00:00.000Z"
+  },
+  "sophos": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-23T00:00:00.000Z"
+  },
+  "proofpoint": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-09T17:39:42.000Z"
+  },
+  "checkpoint": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-24T14:13:55.000Z"
+  },
+  "groupib": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-26T16:59:02.000Z"
+  },
+  "malwarebytes": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T14:53:16.000Z"
+  },
+  "bitdefender": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-26T08:55:20.000Z"
+  },
+  "zscaler": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-19T02:39:04.000Z"
+  },
+  "rapid7": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-25T18:34:43.000Z"
+  },
+  "volexity": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-10-16T18:27:25.000Z"
+  },
+  "fortiguard": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-24T14:00:00.000Z"
+  },
+  "infostealers": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-24T19:19:11.000Z"
+  },
+  "coveware": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-10-28T17:00:00.000Z"
+  },
+  "msft-secintel": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-24T14:31:08.976Z"
+  },
+  "sophos-blog": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T00:00:00.000Z"
+  },
+  "sophos-ransomware": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-10T00:00:00.000Z"
+  },
+  "projectzero": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-23T08:00:00.000Z"
+  },
+  "zdi-advisories": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-24T06:00:00.000Z"
+  },
+  "zdi-blog": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-18T17:23:52.000Z"
+  },
+  "exploitdb": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-11T00:00:00.000Z",
+    "seen": [
+      "exploitdb:2e9dc40ea82951cf",
+      "exploitdb:74561c4ec3159631",
+      "exploitdb:59b99e2adbc9cf10",
+      "exploitdb:f84147b20adfdee7",
+      "exploitdb:edc258d78e2b41fd",
+      "exploitdb:12734f5b1f1411c7",
+      "exploitdb:d6b0057c89739a8d",
+      "exploitdb:7a5c96086267bc10",
+      "exploitdb:ffff93f0b6db6b97",
+      "exploitdb:8ed9d1a2bd47c6d1",
+      "exploitdb:b07fa0516ac00485",
+      "exploitdb:64831b0e50b2143a",
+      "exploitdb:9fa911a73c6a57d3",
+      "exploitdb:12b1cfc82f9cfea8",
+      "exploitdb:fced099ea3eb130e",
+      "exploitdb:06e70e0c40c8aa1c",
+      "exploitdb:ef26b3af17e7470f",
+      "exploitdb:504c81ac7e168bf2",
+      "exploitdb:aba46d5d24b570ce",
+      "exploitdb:7fccb0ce571f9356",
+      "exploitdb:867ac27df914adfa",
+      "exploitdb:1703a317ecc12a76",
+      "exploitdb:9250dbd1a5cda963",
+      "exploitdb:8109a0431a91bb3b",
+      "exploitdb:9bbef26767d9e351",
+      "exploitdb:6df2cb20680ad45b",
+      "exploitdb:9d74514f5f5532da",
+      "exploitdb:77480b76002050ab",
+      "exploitdb:73264b2d960bf2ad",
+      "exploitdb:385ff93d08890768",
+      "exploitdb:47c2fd8b73bac3de",
+      "exploitdb:19ac0f3b11806ac3",
+      "exploitdb:de39efb4bad800ef",
+      "exploitdb:f19aa79626590908",
+      "exploitdb:af5a96c9f4b7ced9",
+      "exploitdb:6fc500cbb65ea932",
+      "exploitdb:d5bbdccb6aa6cd45",
+      "exploitdb:e6a48482a059cf62",
+      "exploitdb:4080733117a263be",
+      "exploitdb:70fa4507f1ddf6a2",
+      "exploitdb:0c8e809d9f4d40e7",
+      "exploitdb:89e8337ca3cc7211",
+      "exploitdb:0f39a1959e30121d",
+      "exploitdb:0c389c622bc1851c",
+      "exploitdb:e3c9e241960b414c",
+      "exploitdb:3031253b860ef3af",
+      "exploitdb:79aef80913fa9682",
+      "exploitdb:aab77b56320c2551",
+      "exploitdb:56511d4d43fcbc02"
+    ]
+  },
+  "qualys": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-26T05:33:42.000Z"
+  },
+  "tenable": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-20T14:00:00.000Z"
+  },
+  "certcc": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-16T16:17:31.751Z"
+  },
+  "vulncheck": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T00:00:00.000Z"
+  },
+  "watchtowr": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-05T21:19:58.000Z"
+  },
+  "horizon3": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-25T22:30:21.000Z"
+  },
+  "slcyber": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-24T00:00:00.000Z"
+  },
+  "portswigger": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-18T14:39:45.000Z"
+  },
+  "synacktiv": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z"
+  },
+  "trailofbits": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-06T12:00:00.000Z"
+  },
+  "bishopfox": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-25T14:00:00.000Z"
+  },
+  "projectdiscovery": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-10T12:25:00.000Z"
+  },
+  "wiz": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-26T02:26:16.000Z"
+  },
+  "orca": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-25T13:00:00.000Z"
+  },
+  "cisa-alerts": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T12:00:00.000Z"
+  },
+  "cisa-ics": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-24T12:00:00.000Z"
+  },
+  "cisa-icsmed": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-10-21T22:12:50.000Z"
+  },
+  "cisa-csa": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-10-19T19:18:07.000Z"
+  },
+  "cisa-news": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-09T12:00:00.000Z"
+  },
+  "fbi-ic3": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-16T15:00:00.000Z"
+  },
+  "europol": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z"
+  },
+  "ncsc-uk-reports": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-03T12:00:00.000Z"
+  },
+  "ncsc-uk-news": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-11T12:00:00.000Z"
+  },
+  "cert-eu": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z"
+  },
+  "cert-eu-ti": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z"
+  },
+  "cert-fr-alerts": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-18T00:00:00.000Z"
+  },
+  "cert-fr": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T00:00:00.000Z"
+  },
+  "cccs": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T18:42:19.000Z"
+  },
+  "ncsc-nl": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T10:01:48.000Z"
+  },
+  "msrc": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T09:10:39.000Z"
+  },
+  "cisco-psirt": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T20:04:26.000Z"
+  },
+  "panw-psirt": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-24T23:10:00.000Z"
+  },
+  "fortinet-psirt": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-20T07:00:00.000Z"
+  },
+  "ivanti": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-10T15:33:07.000Z"
+  },
+  "juniper": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-24T00:00:00.000Z"
+  },
+  "oracle-cpu": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-17T20:00:00.000Z"
+  },
+  "gitlab": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-25T00:00:00.000Z"
+  },
+  "chrome": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T18:52:47.009Z"
+  },
+  "google-security": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-19T17:00:00.000Z"
+  },
+  "aws-security": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-26T00:15:29.000Z"
+  },
+  "cloudflare": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-20T20:24:38.000Z"
+  },
+  "ubuntu-usn": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-26T22:34:55.000Z"
+  },
+  "redhat": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T17:31:41.000Z"
+  },
+  "debian-dsa": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T00:00:00.000Z"
+  },
+  "github-security": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-10T18:00:00.000Z"
+  },
+  "okta": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-18T00:00:00.000Z"
+  },
+  "bleepingcomputer": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-28T15:32:49.000Z"
+  },
+  "krebs": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-21T00:36:39.000Z"
+  },
+  "krebs-ransomware": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-24T14:31:08.976Z"
+  },
+  "darkreading": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T15:27:20.000Z"
+  },
+  "thehackernews": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-28T08:08:11.000Z"
+  },
+  "securityweek": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T11:00:00.000Z"
+  },
+  "therecord": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T14:15:00.000Z"
+  },
+  "cyberscoop": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-25T13:03:24.000Z"
+  },
+  "cyberscoop-ransomware": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-17T13:03:59.000Z"
+  },
+  "helpnet-ransomware": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-26T09:59:07.000Z"
+  },
+  "cybersecurity-dive": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T22:06:30.000Z"
+  },
+  "risky-bulletin": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T00:14:15.000Z"
+  },
+  "theregister": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T10:01:00.000Z"
+  },
+  "arstechnica": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-25T14:29:43.000Z"
+  },
+  "databreaches": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-28T13:34:03.000Z"
+  },
+  "za-techcentral": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T17:16:42.000Z"
+  },
+  "za-itweb": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-27T12:43:41.000Z"
+  },
+  "za-mybroadband": {
+    "consecutiveFailures": 62
+  },
+  "za-businesstech": {
+    "consecutiveFailures": 62
+  },
+  "za-itonline": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-26T07:46:47.000Z"
+  },
+  "sans-isc": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-25T02:00:03.000Z"
+  },
+  "greynoise": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-23T00:00:00.000Z"
+  },
+  "dfirreport": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-08-24T14:28:41.000Z"
+  },
+  "specterops": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-25T23:26:21.000Z"
+  },
+  "trustedsec": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-24T05:00:00.000Z"
+  },
+  "bhis": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-18T21:57:58.000Z"
+  },
+  "censys": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-19T16:36:20.000Z"
+  },
+  "wordfence": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-25T21:27:50.000Z"
+  },
+  "cve-now": {
+    "consecutiveFailures": 0,
+    "lastOk": "2026-11-28T17:21:03.963Z",
+    "latestEntry": "2026-11-28T17:11:13.000Z"
+  }
+}
